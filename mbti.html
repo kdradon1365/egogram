@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성격유형 검사 (MBTI 스타일) | MindMoving</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAF0EF; --card:#FFFFFF; --ink:#1E3A3F; --ink-soft:#4A646A; --line:#D8E2E1;
+    --deep:#2C5A62; --teal:#2A9D8F; --amber:#E8A23D;
+    --ei:#E07A5F; --sn:#E8A23D; --tf:#2A9D8F; --jp:#6C8EA0;
+    --shadow:0 10px 30px rgba(30,58,63,.08); --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Noto Sans KR','Malgun Gothic','맑은 고딕',-apple-system,'Apple SD Gothic Neo',sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;align-items:center;min-height:100%}
+  .wrap{width:100%;max-width:640px;padding:22px 18px 60px;flex:1;display:flex;flex-direction:column}
+  .screen{display:none;animation:fade .45s ease both}
+  .screen.active{display:flex;flex-direction:column}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .brandtop{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:28px;color:var(--ink-soft);font-size:13px;font-weight:500;letter-spacing:.04em}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+  .hero{text-align:center;margin-top:10px}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--teal);text-transform:uppercase;margin-bottom:14px}
+  .title{font-size:clamp(32px,8vw,48px);font-weight:900;letter-spacing:.02em;color:var(--deep);line-height:1.08}
+  .subtitle{font-size:16px;color:var(--ink-soft);margin-top:14px;font-weight:500}
+  .lead{font-size:15px;color:var(--ink-soft);margin:20px auto 0;max-width:480px}
+  .notice{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;padding:14px 16px;margin:24px 0 4px;box-shadow:var(--shadow)}
+  .notice .ic{flex:none;font-size:18px;line-height:1.4}
+  .notice p{font-size:13px;color:var(--ink-soft);line-height:1.6}
+  .notice b{color:var(--ink)}
+
+  .axes{display:flex;flex-direction:column;gap:9px;margin:24px 0 8px}
+  .axis-row{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow)}
+  .chip{flex:none;width:54px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.02em}
+  .axis-row .nm{font-weight:700;font-size:14.5px}
+  .axis-row .ds{font-size:12.5px;color:var(--ink-soft)}
+
+  .btn{appearance:none;border:none;cursor:pointer;font-family:inherit;background:var(--teal);color:#fff;font-weight:700;font-size:17px;
+    padding:17px 24px;border-radius:14px;width:100%;box-shadow:0 8px 20px rgba(42,157,143,.28);transition:transform .12s,box-shadow .12s,background .2s}
+  .btn:hover{background:#268e81}.btn:active{transform:translateY(1px)}
+  .btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);box-shadow:none;font-weight:600;font-size:15px;padding:12px;width:auto}
+  .btn.ghost:hover{color:var(--ink)}.btn.ghost[disabled]{opacity:.35;cursor:default}
+  .note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:16px;line-height:1.55}
+
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .qcount{font-size:14px;font-weight:700;color:var(--deep)}.qcount span{color:var(--ink-soft);font-weight:500}
+  .qaxis{font-size:12px;font-weight:700;color:#fff;padding:4px 11px;border-radius:99px}
+  .progress{height:8px;background:#dbe6e4;border-radius:99px;overflow:hidden;margin-bottom:30px}
+  .progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--deep));border-radius:99px;transition:width .35s}
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:34px 24px;min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .qtext{font-size:22px;font-weight:700;color:var(--ink);line-height:1.45}
+  .scale{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .opt{appearance:none;cursor:pointer;font-family:inherit;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:13px;
+    padding:15px 18px;font-size:16px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:14px;transition:border-color .15s,background .15s}
+  .opt .mk{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);transition:all .15s}
+  .opt:hover{border-color:var(--teal);background:#f5fbfa}
+  .opt:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .opt.sel{border-color:var(--teal);background:#eaf7f5}
+  .opt.sel .mk{border-color:var(--teal);background:var(--teal);box-shadow:inset 0 0 0 4px #fff}
+  .navrow{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:12px}
+
+  .rtitle{text-align:center;margin-bottom:6px}.rtitle .kicker{margin-bottom:8px}
+  .typebig{font-size:clamp(48px,14vw,84px);font-weight:900;letter-spacing:.06em;color:var(--deep);line-height:1;margin:6px 0}
+  .typename{font-size:20px;font-weight:800;color:var(--teal);margin-bottom:4px}
+  .typetag{font-size:14px;color:var(--ink-soft)}
+
+  .axiscard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 22px;margin:22px 0}
+  .axrow{margin-bottom:20px}.axrow:last-child{margin-bottom:0}
+  .axrow .ends{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:7px}
+  .axrow .ends .pick{color:var(--ink)}.axrow .ends .dim{color:#A9B8B6}
+  .track{position:relative;height:30px;background:#eef3f2;border-radius:99px;overflow:hidden}
+  .track .fillL,.track .fillR{position:absolute;top:0;height:100%}
+  .track .mid{position:absolute;left:50%;top:0;width:2px;height:100%;background:#cdd9d7;transform:translateX(-1px)}
+  .track .pct{position:absolute;top:0;height:100%;display:flex;align-items:center;font-size:12.5px;font-weight:800;color:#fff;padding:0 12px}
+
+  .summary{background:linear-gradient(135deg,var(--deep),#234a51);color:#fff;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+  .summary p{font-size:14.5px;line-height:1.65;color:#e8f1f0}
+  .strength{display:flex;flex-direction:column;gap:11px;margin-bottom:22px}
+  .scard{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px}
+  .scard h4{font-size:13px;font-weight:800;color:var(--teal);margin-bottom:5px;letter-spacing:.02em}
+  .scard p{font-size:14px;color:var(--ink-soft);line-height:1.6}
+
+  .disclaimer{font-size:12.5px;color:var(--ink-soft);text-align:center;margin:24px auto 16px;max-width:500px;line-height:1.65}
+  .disclaimer b{color:var(--ink)}
+  .footer{text-align:center;font-size:12px;color:var(--ink-soft);margin-top:26px;letter-spacing:.04em}
+  @media (max-width:420px){.qtext{font-size:20px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 인트로 -->
+  <section class="screen active" id="intro">
+    <div class="brandtop"><span class="dot"></span> MindMoving 마인드무빙 컨설팅</div>
+    <div class="hero">
+      <div class="kicker">16 Types · 성격유형 검사</div>
+      <h1 class="title">성격유형<br>검사</h1>
+      <p class="subtitle">네 가지 선호로 알아보는 나의 유형</p>
+      <p class="lead">에너지 방향, 인식 방식, 판단 기준, 생활 양식 — 네 가지 선호의 조합으로 16가지 유형 중 나와 가까운 모습을 살펴봅니다.</p>
+    </div>
+
+    <div class="notice">
+      <span class="ic">💡</span>
+      <p><b>가볍게 즐겨 주세요.</b> 이 검사는 <b>재미와 자기탐색·대화를 여는 용도</b>입니다. 널리 알려진 4지표 구조를 본떠 만든 것으로, 학술적으로 검증된 진단 도구는 아니에요. 더 안정적이고 검증된 결과가 필요하면 <b>빅파이브 검사</b>를 권합니다.</p>
+    </div>
+
+    <div class="axes">
+      <div class="axis-row"><span class="chip" style="background:var(--ei)">E·I</span><div><div class="nm">에너지 방향</div><div class="ds">외향(E) ↔ 내향(I)</div></div></div>
+      <div class="axis-row"><span class="chip" style="background:var(--sn)">S·N</span><div><div class="nm">인식 방식</div><div class="ds">감각·현실(S) ↔ 직관·가능성(N)</div></div></div>
+      <div class="axis-row"><span class="chip" style="background:var(--tf)">T·F</span><div><div class="nm">판단 기준</div><div class="ds">사고·논리(T) ↔ 감정·관계(F)</div></div></div>
+      <div class="axis-row"><span class="chip" style="background:var(--jp)">J·P</span><div><div class="nm">생활 양식</div><div class="ds">계획·체계(J) ↔ 유연·즉흥(P)</div></div></div>
+    </div>
+
+    <div style="margin-top:24px"><button class="btn" id="startBtn">검사 시작하기 (48문항)</button></div>
+    <p class="note">약 5~7분 소요 · 결과는 기록되거나 저장되지 않습니다.<br>이 화면을 닫으면 모든 응답이 사라져요.</p>
+  </section>
+
+  <!-- 검사 -->
+  <section class="screen" id="test">
+    <div class="qhead">
+      <div class="qcount"><span id="qNow">1</span> <span>/ 48</span></div>
+      <div class="qaxis" id="qAxisTag">E·I</div>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="qcard"><p class="qtext" id="qText" aria-live="polite">문항</p></div>
+    <div class="scale" id="scale" role="group" aria-label="응답 선택"></div>
+    <div class="navrow">
+      <button class="btn ghost" id="prevBtn">← 이전 문항</button>
+      <button class="btn ghost" id="restartTest">처음으로</button>
+    </div>
+  </section>
+
+  <!-- 결과 -->
+  <section class="screen" id="result">
+    <div class="rtitle"><div class="kicker">Your Type</div></div>
+    <div style="text-align:center">
+      <div class="typebig" id="typeCode">----</div>
+      <div class="typename" id="typeName">유형</div>
+      <div class="typetag" id="typeTag"></div>
+    </div>
+
+    <div class="axiscard" id="axes"></div>
+
+    <div class="summary"><p id="sumText"></p></div>
+
+    <div class="strength" id="strength"></div>
+
+    <p class="disclaimer"><b>이 결과는 진단이 아니라 자기탐색을 위한 참고예요.</b> 사람은 16개 칸으로 나뉘지 않으며, 같은 사람도 상황·시기에 따라 다르게 나올 수 있습니다. 경계(50%에 가까운 지표)는 특히 유동적이에요. 좋고 나쁜 유형은 없습니다.</p>
+
+    <button class="btn" id="againBtn">다시 검사하기</button>
+    <p class="footer">MindMoving · AI Technology × Human Psychology</p>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  function getCss(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+
+  /* 각 지표 12문항. dir:+1 이면 '그렇다'가 앞 글자(E/S/T/J)쪽, -1 이면 뒤 글자(I/N/F/P)쪽 */
+  const AX = {
+    EI:{a:'E',b:'I',color:getCss('--ei')},
+    SN:{a:'S',b:'N',color:getCss('--sn')},
+    TF:{a:'T',b:'F',color:getCss('--tf')},
+    JP:{a:'J',b:'P',color:getCss('--jp')}
+  };
+
+  const Q = {
+    EI:[
+      {d:+1,t:"여러 사람과 어울릴 때 에너지가 솟는다."},
+      {d:-1,t:"혼자 있는 시간에 에너지가 충전된다."},
+      {d:+1,t:"처음 만난 사람과도 쉽게 대화를 시작한다."},
+      {d:-1,t:"말하기 전에 충분히 생각을 정리하는 편이다."},
+      {d:+1,t:"모임에서 먼저 다가가 분위기를 이끄는 편이다."},
+      {d:-1,t:"큰 모임보다 소수의 깊은 만남이 편하다."},
+      {d:+1,t:"생각을 말로 꺼내면서 정리하는 편이다."},
+      {d:-1,t:"활동이 많은 하루를 보내면 혼자 쉬고 싶어진다."},
+      {d:+1,t:"주말에는 사람들과 함께 보내는 것이 좋다."},
+      {d:-1,t:"낯선 사람들 사이에서는 말수가 줄어든다."},
+      {d:+1,t:"새로운 사람을 만나는 일이 즐겁다."},
+      {d:-1,t:"내 속마음은 가까운 사람에게만 천천히 보인다."}
+    ],
+    SN:[
+      {d:+1,t:"구체적이고 실제적인 사실에 먼저 주목한다."},
+      {d:-1,t:"눈에 보이는 것보다 그 이면의 의미가 궁금하다."},
+      {d:+1,t:"검증된 방법과 경험을 신뢰한다."},
+      {d:-1,t:"새롭고 색다른 아이디어에 끌린다."},
+      {d:+1,t:"설명은 단계별로 구체적인 편이 좋다."},
+      {d:-1,t:"미래의 가능성을 상상하는 것을 즐긴다."},
+      {d:+1,t:"지금 당장 쓸모 있는 것에 관심이 많다."},
+      {d:-1,t:"큰 그림과 전체 흐름을 먼저 본다."},
+      {d:+1,t:"세부 사항을 정확히 기억하는 편이다."},
+      {d:-1,t:"비유나 상징으로 설명하는 것을 좋아한다."},
+      {d:+1,t:"현실적이고 실용적이라는 말을 듣는다."},
+      {d:-1,t:"‘왜’와 ‘만약에’를 자주 떠올린다."}
+    ],
+    TF:[
+      {d:+1,t:"결정할 때 논리와 객관적 사실을 우선한다."},
+      {d:-1,t:"결정할 때 사람들의 감정과 관계를 먼저 살핀다."},
+      {d:+1,t:"공정한 원칙이 분위기보다 중요하다."},
+      {d:-1,t:"상대가 상처받지 않도록 말을 고르는 편이다."},
+      {d:+1,t:"비판을 들어도 사실이면 담담히 받아들인다."},
+      {d:-1,t:"누군가 힘들어하면 함께 마음이 쓰인다."},
+      {d:+1,t:"문제를 분석하고 맞고 틀림을 따지는 편이다."},
+      {d:-1,t:"칭찬과 격려로 사람을 움직이는 편이다."},
+      {d:+1,t:"감정에 휘둘리지 않으려 노력한다."},
+      {d:-1,t:"화합과 공감을 무엇보다 중요하게 여긴다."},
+      {d:+1,t:"냉정하고 이성적이라는 말을 듣는다."},
+      {d:-1,t:"다른 사람의 입장에 쉽게 공감한다."}
+    ],
+    JP:[
+      {d:+1,t:"계획을 세우고 그대로 진행할 때 마음이 편하다."},
+      {d:-1,t:"상황에 따라 즉흥적으로 움직이는 편이 좋다."},
+      {d:+1,t:"할 일을 미리 끝내야 안심이 된다."},
+      {d:-1,t:"마감이 닥쳐야 집중이 잘 되는 편이다."},
+      {d:+1,t:"정리정돈된 환경에서 일이 잘 된다."},
+      {d:-1,t:"규칙보다 그때그때의 자유로움이 좋다."},
+      {d:+1,t:"결정을 빨리 내리고 마무리 짓는 편이다."},
+      {d:-1,t:"선택지를 열어두고 천천히 정하는 편이다."},
+      {d:+1,t:"일정과 목록을 만들어 관리하는 편이다."},
+      {d:-1,t:"계획이 바뀌어도 별로 불편하지 않다."},
+      {d:+1,t:"체계적이고 계획적이라는 말을 듣는다."},
+      {d:-1,t:"여행이나 일정은 느슨하게 잡는 편이다."}
+    ]
+  };
+
+  /* 16유형 별칭 + 한 줄 키워드 */
+  const TYPES = {
+    ISTJ:["청렴결백한 관리자","책임감 · 현실 · 신뢰"],
+    ISFJ:["용감한 수호자","헌신 · 배려 · 성실"],
+    INFJ:["선의의 옹호자","통찰 · 신념 · 이상"],
+    INTJ:["용의주도한 전략가","전략 · 독립 · 통찰"],
+    ISTP:["만능 재주꾼","분석 · 실용 · 침착"],
+    ISFP:["호기심 많은 예술가","감성 · 자유 · 온화"],
+    INFP:["열정적인 중재자","이상 · 공감 · 진정성"],
+    INTP:["논리적인 사색가","탐구 · 논리 · 독창"],
+    ESTP:["모험을 즐기는 사업가","행동 · 현실 · 활력"],
+    ESFP:["자유로운 연예인","활기 · 사교 · 즐거움"],
+    ENFP:["재기발랄한 활동가","열정 · 가능성 · 교감"],
+    ENTP:["뜨거운 논쟁을 즐기는 변론가","아이디어 · 도전 · 재치"],
+    ESTJ:["엄격한 관리자","조직 · 추진 · 책임"],
+    ESFJ:["사교적인 외교관","화합 · 배려 · 협력"],
+    ENFJ:["정의로운 사회운동가","공감 · 영향 · 리더십"],
+    ENTJ:["대담한 통솔자","비전 · 결단 · 추진"]
+  };
+
+  /* 지표별 선호 해석 (앞글자/뒷글자) */
+  const PREF = {
+    E:"사람들과의 교류와 활동에서 에너지를 얻습니다.",
+    I:"혼자만의 시간과 차분한 환경에서 에너지를 충전합니다.",
+    S:"구체적인 사실과 현실적인 경험을 신뢰합니다.",
+    N:"가능성과 의미, 큰 그림에 관심이 많습니다.",
+    T:"논리와 공정한 기준으로 판단하는 편입니다.",
+    F:"사람과 관계, 공감을 중심으로 판단하는 편입니다.",
+    J:"계획하고 정리하며 마무리 짓는 것을 선호합니다.",
+    P:"유연하게 열어두고 상황에 맞추는 것을 선호합니다."
+  };
+
+  const SCALE=[
+    {v:+2,t:"매우 그렇다"},{v:+1,t:"그렇다"},{v:0,t:"보통이다"},{v:-1,t:"아니다"},{v:-2,t:"전혀 아니다"}
+  ];
+
+  /* 문항 구성: 라운드로빈(EI,SN,TF,JP 순환)으로 같은 지표 연속 방지 */
+  const KEYS=['EI','SN','TF','JP'];
+  const items=[];
+  for(let r=0;r<12;r++){ for(const ax of KEYS){ const it=Q[ax][r]; items.push({ax:ax,d:it.d,t:it.t}); } }
+  const N=items.length;
+  const answers=new Array(N).fill(null);
+  let cur=0;
+
+  const $=id=>document.getElementById(id);
+  const screens={intro:$("intro"),test:$("test"),result:$("result")};
+  function show(name){for(const k in screens)screens[k].classList.toggle("active",k===name);window.scrollTo({top:0,behavior:"instant"});}
+
+  function renderQ(){
+    const it=items[cur];
+    $("qNow").textContent=cur+1;
+    $("qText").textContent=it.t;
+    const tag=$("qAxisTag");
+    tag.textContent=AX[it.ax].a+"·"+AX[it.ax].b;
+    tag.style.background=AX[it.ax].color;
+    $("bar").style.width=(cur/N*100)+"%";
+    $("prevBtn").disabled=(cur===0);
+    const box=$("scale"); box.innerHTML="";
+    SCALE.forEach(opt=>{
+      const b=document.createElement("button");
+      b.className="opt"+(answers[cur]===opt.v?" sel":"");
+      b.innerHTML='<span class="mk"></span><span>'+opt.t+'</span>';
+      b.setAttribute("aria-pressed",answers[cur]===opt.v);
+      b.onclick=()=>choose(opt.v);
+      box.appendChild(b);
+    });
+  }
+  function choose(v){
+    answers[cur]=v;
+    [...$("scale").children].forEach((c,i)=>{const on=SCALE[i].v===v;c.classList.toggle("sel",on);c.setAttribute("aria-pressed",on);});
+    setTimeout(()=>{ if(cur<N-1){cur++;renderQ();} else finish(); },200);
+  }
+  $("startBtn").onclick=()=>{cur=0;show("test");renderQ();};
+  $("prevBtn").onclick=()=>{if(cur>0){cur--;renderQ();}};
+  $("restartTest").onclick=resetAll;
+  $("againBtn").onclick=resetAll;
+  function resetAll(){answers.fill(null);cur=0;$("bar").style.width="0%";show("intro");}
+
+  function finish(){
+    $("bar").style.width="100%";
+    /* 각 지표 점수 합산: 응답(-2~+2) × 방향(d). 양수면 앞글자(a) 쪽 */
+    const score={EI:0,SN:0,TF:0,JP:0};
+    items.forEach((it,i)=>{ const r=answers[i]||0; score[it.ax]+=r*it.d; });
+
+    const code = KEYS.map(ax=>{
+      const a=AX[ax].a,b=AX[ax].b;
+      return score[ax]===0 ? a : (score[ax]>0?a:b);   // 동점이면 앞글자 기본
+    }).join("");
+
+    $("typeCode").textContent=code;
+    $("typeName").textContent=TYPES[code][0];
+    $("typeTag").textContent=TYPES[code][1];
+
+    /* 지표 막대 (양쪽 % 표시) */
+    const maxAbs=12*2; // 각 지표 최대 ±24
+    const axesBox=$("axes"); axesBox.innerHTML="";
+    KEYS.forEach(ax=>{
+      const a=AX[ax].a,b=AX[ax].b,color=AX[ax].color;
+      const s=score[ax];
+      // a쪽 비율(0~100): s가 +maxAbs면 100% a
+      const aPct=Math.round((s+maxAbs)/(2*maxAbs)*100);
+      const bPct=100-aPct;
+      const aPick=s>=0;
+      const row=document.createElement("div");
+      row.className="axrow";
+      row.innerHTML=
+        '<div class="ends"><span class="'+(aPick?'pick':'dim')+'">'+a+' · '+labelOf(a)+'</span>'+
+        '<span class="'+(!aPick?'pick':'dim')+'">'+labelOf(b)+' · '+b+'</span></div>'+
+        '<div class="track">'+
+          '<div class="fillL" style="left:0;width:'+aPct+'%;background:'+(aPick?color:'#d7e0df')+'"></div>'+
+          '<div class="fillR" style="right:0;width:'+bPct+'%;background:'+(!aPick?color:'#d7e0df')+'"></div>'+
+          '<div class="mid"></div>'+
+          '<div class="pct" style="'+(aPick?'left:0':'right:0')+'">'+(aPick?aPct:bPct)+'%</div>'+
+        '</div>';
+      axesBox.appendChild(row);
+    });
+
+    /* 요약 */
+    $("sumText").textContent=
+      "당신과 가장 가까운 유형은 ‘"+code+" — "+TYPES[code][0]+"’입니다. "+
+      "네 가지 선호("+code.split('').join('·')+")가 어우러진 모습이에요. 막대가 가운데(50%)에 가까운 지표는 두 성향을 함께 지녔다는 뜻이니, 그 양쪽을 모두 자신으로 봐 주세요.";
+
+    /* 선호별 카드 */
+    const st=$("strength"); st.innerHTML="";
+    code.split('').forEach(letter=>{
+      const c=document.createElement("div");
+      c.className="scard";
+      c.innerHTML='<h4>'+letter+' · '+labelOf(letter)+'</h4><p>'+PREF[letter]+'</p>';
+      st.appendChild(c);
+    });
+
+    show("result");
+  }
+
+  function labelOf(L){
+    return ({E:"외향",I:"내향",S:"감각",N:"직관",T:"사고",F:"감정",J:"판단",P:"인식"})[L];
+  }
+
+  document.addEventListener("keydown",e=>{
+    if(!screens.test.classList.contains("active"))return;
+    const map={"1":+2,"2":+1,"3":0,"4":-1,"5":-2};
+    if(e.key in map) choose(map[e.key]);
+  });
+})();
+</script>
+</body>
+</html>
