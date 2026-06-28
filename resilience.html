@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="마인드무빙 컨설팅 (MindMoving) — www.mindmoving.co.kr">
+<meta name="copyright" content="© 2026 마인드무빙 컨설팅 (MindMoving). All rights reserved. www.mindmoving.co.kr">
+<!--
+  ============================================================
+  ⓒ 2026 마인드무빙 컨설팅 (MindMoving Consulting)
+  https://www.mindmoving.co.kr
+  본 검사 콘텐츠(문항·구성·채점 방식·디자인)의 저작권은
+  마인드무빙 컨설팅에 있습니다. 무단 복제·배포·수정·상업적 사용을 금합니다.
+  All rights reserved. Unauthorized use is prohibited.
+  ============================================================
+-->
+<title>회복탄력성 자가검사 · MindMoving</title>
+<style>
+  :root{
+    --deep:#2C5A62; --teal:#2A9D8F; --amber:#E8A23D; --ink:#1E3A3F;
+    --soft:#55686B; --bg:#EAF0EF; --card:#ffffff; --line:#D8E2E1; --tint:#F2F6F5;
+    --c-self:#2C5A62; --c-rel:#2A9D8F; --c-pos:#E8A23D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Malgun Gothic","맑은 고딕",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:linear-gradient(160deg,#eef3f2 0%,#e3ecea 100%);
+    color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .wrap{width:100%; max-width:640px}
+  .card{
+    background:var(--card); border-radius:20px; padding:34px 30px;
+    box-shadow:0 18px 50px rgba(30,58,63,.13); border:1px solid rgba(216,226,225,.7);
+  }
+  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;color:var(--teal);margin-bottom:10px}
+  h1{font-size:34px;font-weight:800;color:var(--deep);letter-spacing:-.5px}
+  .sub{font-size:15px;color:var(--soft);margin-top:8px}
+  .accent{height:5px;width:54px;background:var(--amber);border-radius:3px;margin:18px 0 22px}
+  .guide{background:var(--tint);border-radius:14px;padding:18px 20px;margin:6px 0 24px;font-size:14px;color:var(--soft)}
+  .guide b{color:var(--ink)}
+  .guide ul{list-style:none;margin-top:8px}
+  .guide li{padding:4px 0 4px 22px;position:relative}
+  .guide li::before{content:"·";position:absolute;left:8px;color:var(--teal);font-weight:800}
+  .src{font-size:12px;color:#8A9B99;margin-top:14px;line-height:1.5}
+  button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
+  .btn-start{
+    width:100%;background:var(--deep);color:#fff;font-size:18px;font-weight:700;
+    padding:16px;border-radius:14px;margin-top:6px
+  }
+  .btn-start:hover{background:#234b52}
+  /* progress */
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .count{font-size:13px;color:var(--soft);font-weight:600}
+  .domain-tag{font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;color:#fff}
+  .bar{height:8px;background:#e4ecea;border-radius:6px;overflow:hidden;margin:10px 0 30px}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--deep));border-radius:6px;transition:width .35s}
+  .q{font-size:22px;font-weight:700;color:var(--ink);min-height:104px;display:flex;align-items:center;line-height:1.45}
+  .opts{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  .opt{
+    display:flex;align-items:center;gap:14px;background:var(--tint);border:2px solid transparent;
+    border-radius:13px;padding:14px 18px;font-size:16px;color:var(--ink);text-align:left;width:100%
+  }
+  .opt:hover{border-color:var(--teal);background:#fff}
+  .opt .num{
+    width:30px;height:30px;border-radius:50%;background:#fff;border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--soft);flex-shrink:0
+  }
+  .opt:hover .num{border-color:var(--teal);color:var(--teal)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;align-items:center}
+  .btn-prev{background:none;color:var(--soft);font-size:14px;padding:8px 4px;font-weight:600}
+  .btn-prev:hover{color:var(--ink)}
+  .hint{font-size:12px;color:#9aa9a8}
+  /* result */
+  .res-head{text-align:center;margin-bottom:8px}
+  .res-head .badge{margin-bottom:6px}
+  .gauge{text-align:center;margin:14px 0 10px}
+  .gauge .pct{font-size:54px;font-weight:800;color:var(--deep);line-height:1}
+  .gauge .lab{font-size:15px;color:var(--soft);margin-top:4px}
+  .band{display:inline-block;margin-top:10px;padding:6px 18px;border-radius:20px;font-weight:700;font-size:14px}
+  .sec-title{font-size:13px;font-weight:700;letter-spacing:1px;color:var(--soft);margin:26px 0 12px;text-transform:uppercase}
+  .dom{margin-bottom:18px}
+  .dom .dh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .dom .dn{font-size:16px;font-weight:700}
+  .dom .dv{font-size:14px;font-weight:700}
+  .dbar{height:14px;background:#eef2f1;border-radius:8px;overflow:hidden}
+  .dbar > i{display:block;height:100%;border-radius:8px;transition:width .5s}
+  .subs{margin-top:8px;padding-left:2px}
+  .sub-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+  .sub-row .sn{font-size:13px;color:var(--soft);width:84px;flex-shrink:0}
+  .sbar{flex:1;height:8px;background:#eef2f1;border-radius:5px;overflow:hidden}
+  .sbar > i{display:block;height:100%;border-radius:5px}
+  .sub-row .sv{font-size:12px;color:var(--soft);width:38px;text-align:right}
+  .insight{background:var(--tint);border-radius:14px;padding:18px 20px;margin-top:8px;font-size:14.5px}
+  .insight b{color:var(--deep)}
+  .note{background:#fff;border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:10px;padding:15px 18px;margin-top:18px;font-size:12.5px;color:var(--soft);line-height:1.6}
+  .note b{color:var(--ink)}
+  .btn-restart{width:100%;background:var(--teal);color:#fff;font-size:16px;font-weight:700;padding:15px;border-radius:13px;margin-top:20px}
+  .btn-restart:hover{background:#23897d}
+  .foot{text-align:center;font-size:11px;color:#9aa9a8;margin-top:18px}
+  .hide{display:none}
+  @media(max-width:520px){.card{padding:26px 20px}h1{font-size:28px}.q{font-size:19px;min-height:90px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 시작 화면 -->
+  <div class="card" id="intro">
+    <span class="badge">MINDMOVING · 자기이해 도구</span>
+    <h1>회복탄력성 자가검사</h1>
+    <div class="sub">역경을 딛고 다시 일어서는 마음의 힘, 지금 나의 회복탄력성을 살펴봅니다.</div>
+    <div class="accent"></div>
+    <div class="guide">
+      <b>안내</b>
+      <ul>
+        <li>총 45문항이에요. 시간에 얽매이지 말고, 부담 없이 자연스럽게 답해 주세요.</li>
+        <li>'되고 싶은 나'가 아니라 '평소의 나'로 답해 주세요.</li>
+        <li>정답은 없습니다. 떠오르는 대로 솔직하게.</li>
+        <li>결과는 저장되지 않으며, 이 화면을 닫으면 사라집니다.</li>
+      </ul>
+    </div>
+    <button class="btn-start" onclick="start()">검사 시작하기</button>
+    <div class="src">
+      이 검사는 김주환 교수의 <b>회복탄력성(KRQ) 3요인 모델</b>(자기조절력·대인관계력·긍정성)과
+      국제적으로 검증된 회복탄력성 척도(CD-RISC, BRS 등)의 구성개념을 바탕으로,
+      MindMoving이 자체 제작한 약식 자기이해용 검사입니다. 임상 진단 도구가 아닙니다.
+    </div>
+  </div>
+
+  <!-- 문항 화면 -->
+  <div class="card hide" id="quiz">
+    <div class="top">
+      <span class="count"><span id="cur">1</span> / 45</span>
+    </div>
+    <div class="bar"><i id="prog" style="width:0%"></i></div>
+    <div class="q" id="qtext">문항</div>
+    <div class="opts" id="opts"></div>
+    <div class="nav">
+      <button class="btn-prev" id="prevBtn" onclick="prev()">← 이전</button>
+      <span class="hint">키보드 1~5로도 응답할 수 있어요</span>
+    </div>
+  </div>
+
+  <!-- 결과 화면 -->
+  <div class="card hide" id="result">
+    <div class="res-head">
+      <span class="badge">YOUR RESILIENCE</span>
+    </div>
+    <div class="gauge">
+      <div class="pct"><span id="totPct">0</span>%</div>
+      <div class="lab">종합 회복탄력성 지수</div>
+      <div class="band" id="band"></div>
+    </div>
+
+    <div class="sec-title">3가지 핵심 힘 · 9개 세부 영역</div>
+    <div id="domains"></div>
+
+    <div class="sec-title">읽어보기</div>
+    <div class="insight" id="insight"></div>
+
+    <div class="note" id="srcNote"></div>
+    <div id="support"></div>
+
+    <button class="btn-restart" onclick="restart()">다시하기</button>
+    <div class="foot">MindMoving · AI Technology × Human Psychology</div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- 문항 정의 ----------
+   domain: self(자기조절력) / rel(대인관계력) / pos(긍정성)
+   sub: 세부영역 키, rev: 역채점 여부 ---------- */
+const DOMAINS = {
+  self:{name:"자기조절력", color:"#2C5A62"},
+  rel: {name:"대인관계력", color:"#2A9D8F"},
+  pos: {name:"긍정성",     color:"#E8A23D"}
+};
+const SUBS = {
+  emo:{name:"감정조절력", domain:"self"},
+  imp:{name:"충동통제력", domain:"self"},
+  cau:{name:"원인분석력", domain:"self"},
+  com:{name:"소통능력",   domain:"rel"},
+  emp:{name:"공감능력",   domain:"rel"},
+  con:{name:"관계망",     domain:"rel"},
+  opt:{name:"자기낙관성", domain:"pos"},
+  sat:{name:"생활만족",   domain:"pos"},
+  gra:{name:"감사하기",   domain:"pos"}
+};
+const Q = [
+  // 자기조절력 — 감정조절력
+  {t:"화가 나거나 속상할 때도 곧 마음을 가라앉힐 수 있다.", s:"emo"},
+  {t:"스트레스 상황에서도 평정심을 유지하려 노력한다.", s:"emo"},
+  {t:"감정이 격해져도 스스로를 추스를 방법을 알고 있다.", s:"emo"},
+  {t:"부정적인 감정에 한번 빠지면 좀처럼 헤어나오기 어렵다.", s:"emo", rev:true},
+  {t:"기분이 상하면 그 감정이 오래 남아 일상에 영향을 준다.", s:"emo", rev:true},
+  // 자기조절력 — 충동통제력
+  {t:"하고 싶은 일이 있어도 더 중요한 일을 위해 참을 수 있다.", s:"imp"},
+  {t:"순간의 기분에 휩쓸려 행동했다가 후회하는 일이 적다.", s:"imp"},
+  {t:"당장 편한 쪽보다, 나중에 더 도움이 되는 쪽을 선택한다.", s:"imp"},
+  {t:"즉흥적으로 결정하고 나중에 후회할 때가 많다.", s:"imp", rev:true},
+  {t:"하고 싶은 충동이 들면 참기가 어렵다.", s:"imp", rev:true},
+  // 자기조절력 — 원인분석력
+  {t:"문제가 생기면 원인을 차분히 따져 보는 편이다.", s:"cau"},
+  {t:"어려운 일이 닥쳐도 왜 그런 일이 생겼는지 객관적으로 살핀다.", s:"cau"},
+  {t:"실패했을 때 무엇을 바꾸면 좋을지 구체적으로 짚어 본다.", s:"cau"},
+  {t:"일이 잘못되면 무조건 내 탓이라고 단정하곤 한다.", s:"cau", rev:true},
+  {t:"안 좋은 일이 생기면 원인보다 감정에 먼저 휩싸인다.", s:"cau", rev:true},
+  // 대인관계력 — 소통능력
+  {t:"내 생각과 감정을 상대가 이해하기 쉽게 전달할 수 있다.", s:"com"},
+  {t:"의견이 다른 사람과도 대화를 잘 이어갈 수 있다.", s:"com"},
+  {t:"갈등이 생겨도 대화로 풀어가려 한다.", s:"com"},
+  {t:"내 마음을 표현하는 것이 어렵고 부담스럽다.", s:"com", rev:true},
+  {t:"하고 싶은 말이 있어도 속으로 삼키는 편이다.", s:"com", rev:true},
+  // 대인관계력 — 공감능력
+  {t:"상대의 표정이나 말투에서 그 사람의 기분을 잘 알아챈다.", s:"emp"},
+  {t:"다른 사람의 입장에서 생각해 보려고 한다.", s:"emp"},
+  {t:"누군가 힘들어하면 그 마음이 잘 느껴진다.", s:"emp"},
+  {t:"남의 감정을 잘 헤아리지 못하는 편이다.", s:"emp", rev:true},
+  {t:"다른 사람의 기분 변화를 잘 눈치채지 못한다.", s:"emp", rev:true},
+  // 대인관계력 — 관계망
+  {t:"힘들 때 의지하고 도움을 청할 사람이 있다.", s:"con"},
+  {t:"나는 주변 사람들과 연결되어 있다고 느낀다.", s:"con"},
+  {t:"나를 진심으로 응원해 주는 사람이 있다.", s:"con"},
+  {t:"어려운 일은 결국 혼자 감당해야 한다고 느낀다.", s:"con", rev:true},
+  {t:"마음을 터놓을 사람이 별로 없다고 느낀다.", s:"con", rev:true},
+  // 긍정성 — 자기낙관성
+  {t:"어려운 상황도 결국엔 나아질 거라고 믿는다.", s:"opt"},
+  {t:"나는 웬만한 일은 해낼 수 있다고 생각한다.", s:"opt"},
+  {t:"힘든 일을 겪어도 다시 일어설 수 있다고 믿는다.", s:"opt"},
+  {t:"앞날을 생각하면 걱정과 비관이 앞선다.", s:"opt", rev:true},
+  {t:"새로운 일에 도전할 때 잘 안 될까 봐 먼저 두렵다.", s:"opt", rev:true},
+  // 긍정성 — 생활만족
+  {t:"지금의 내 삶에 대체로 만족한다.", s:"sat"},
+  {t:"나는 하루하루를 의미 있게 보내고 있다고 느낀다.", s:"sat"},
+  {t:"전반적으로 내 삶이 좋은 방향으로 가고 있다고 느낀다.", s:"sat"},
+  {t:"내 삶이 내가 바라던 모습과 거리가 멀다고 느낀다.", s:"sat", rev:true},
+  {t:"요즘 내 삶이 공허하거나 무의미하게 느껴질 때가 있다.", s:"sat", rev:true},
+  // 긍정성 — 감사하기
+  {t:"일상에서 고마운 일을 자주 발견한다.", s:"gra"},
+  {t:"작은 것에도 감사함을 느끼는 편이다.", s:"gra"},
+  {t:"주변 사람들에게 고마운 마음을 자주 떠올린다.", s:"gra"},
+  {t:"가진 것보다 부족한 것이 먼저 눈에 들어온다.", s:"gra", rev:true},
+  {t:"당연하게 여겨 고마움을 잘 느끼지 못할 때가 많다.", s:"gra", rev:true}
+];
+const OPTS = ["전혀 그렇지 않다","그렇지 않다","보통이다","그렇다","매우 그렇다"];
+
+let idx=0;
+const answers=new Array(Q.length).fill(null);
+
+function start(){ idx=0; document.getElementById('intro').classList.add('hide');
+  document.getElementById('quiz').classList.remove('hide'); render(); }
+
+function render(){
+  const q=Q[idx], sub=SUBS[q.s], dom=DOMAINS[sub.domain];
+  document.getElementById('cur').textContent=idx+1;
+  document.getElementById('prog').style.width=((idx)/Q.length*100)+'%';
+  document.getElementById('qtext').textContent=q.t;
+  const box=document.getElementById('opts'); box.innerHTML='';
+  OPTS.forEach((o,i)=>{
+    const b=document.createElement('button'); b.className='opt';
+    if(answers[idx]===i+1){ b.style.borderColor=dom.color; b.style.background='#fff'; }
+    b.innerHTML='<span class="num">'+(i+1)+'</span>'+o;
+    b.onclick=()=>choose(i+1);
+    box.appendChild(b);
+  });
+  document.getElementById('prevBtn').style.visibility = idx===0?'hidden':'visible';
+}
+function choose(v){ answers[idx]=v;
+  if(idx<Q.length-1){ idx++; render(); } else { finish(); } }
+function prev(){ if(idx>0){ idx--; render(); } }
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('quiz').classList.contains('hide'))return;
+  if(e.key>='1'&&e.key<='5') choose(parseInt(e.key));
+  if(e.key==='Backspace'){ e.preventDefault(); prev(); }
+});
+
+function finish(){
+  // 세부영역 점수 합산 (각 3문항, 3~15 → %)
+  const subSum={}, subCnt={};
+  Object.keys(SUBS).forEach(k=>{subSum[k]=0;subCnt[k]=0;});
+  Q.forEach((q,i)=>{
+    let v=answers[i]||3; if(q.rev) v=6-v;
+    subSum[q.s]+=v; subCnt[q.s]++;
+  });
+  const subPct={};
+  Object.keys(SUBS).forEach(k=>{
+    const min=subCnt[k], max=subCnt[k]*5;
+    subPct[k]=Math.round((subSum[k]-min)/(max-min)*100);
+  });
+  // 도메인 = 소속 세부영역 평균
+  const domVals={self:[],rel:[],pos:[]};
+  Object.keys(SUBS).forEach(k=>domVals[SUBS[k].domain].push(subPct[k]));
+  const domPct={};
+  Object.keys(domVals).forEach(d=>domPct[d]=Math.round(domVals[d].reduce((a,b)=>a+b,0)/domVals[d].length));
+  const total=Math.round((domPct.self+domPct.rel+domPct.pos)/3);
+  showResult(total,domPct,subPct);
+}
+
+function band(p){
+  if(p>=75) return {t:"든든해요", c:"#2A9D8F", bg:"#E4F3F0"};
+  if(p>=50) return {t:"안정적이에요", c:"#2C5A62", bg:"#E8F0EF"};
+  if(p>=30) return {t:"키워가는 중", c:"#B5781F", bg:"#FBF1DE"};
+  return {t:"지금은 충전이 필요해요", c:"#A8632E", bg:"#F7EBE2"};
+}
+
+function showResult(total,domPct,subPct){
+  document.getElementById('quiz').classList.add('hide');
+  document.getElementById('result').classList.remove('hide');
+  document.getElementById('totPct').textContent=total;
+  const b=band(total); const be=document.getElementById('band');
+  be.textContent=b.t; be.style.color=b.c; be.style.background=b.bg;
+
+  // 도메인 막대
+  const dWrap=document.getElementById('domains'); dWrap.innerHTML='';
+  const order=[['self',domPct.self],['rel',domPct.rel],['pos',domPct.pos]];
+  order.forEach(([k,v])=>{
+    const d=DOMAINS[k];
+    const el=document.createElement('div'); el.className='dom';
+    el.innerHTML='<div class="dh"><span class="dn" style="color:'+d.color+'">'+d.name+'</span>'+
+      '<span class="dv" style="color:'+d.color+'">'+v+'%</span></div>'+
+      '<div class="dbar"><i style="width:'+v+'%;background:'+d.color+'"></i></div>';
+    // 세부 3개
+    const subWrap=document.createElement('div'); subWrap.className='subs';
+    Object.keys(SUBS).filter(s=>SUBS[s].domain===k).forEach(s=>{
+      const r=document.createElement('div'); r.className='sub-row';
+      r.innerHTML='<span class="sn">'+SUBS[s].name+'</span>'+
+        '<div class="sbar"><i style="width:'+subPct[s]+'%;background:'+d.color+'99"></i></div>'+
+        '<span class="sv">'+subPct[s]+'%</span>';
+      subWrap.appendChild(r);
+    });
+    el.appendChild(subWrap);
+    dWrap.appendChild(el);
+  });
+
+  // 인사이트: 가장 높은/키울 도메인
+  const sorted=order.slice().sort((a,b)=>b[1]-a[1]);
+  const top=DOMAINS[sorted[0][0]].name, low=DOMAINS[sorted[2][0]].name;
+  const allSub=Object.keys(SUBS).map(s=>[s,subPct[s]]);
+  const topSub=allSub.slice().sort((a,b)=>b[1]-a[1])[0];
+  const lowSub=allSub.slice().sort((a,b)=>a[1]-b[1])[0];
+  document.getElementById('insight').innerHTML=
+    '지금 당신을 가장 든든하게 받쳐 주는 힘은 <b>'+top+'</b>이고, 그중에서도 '+
+    '<b>'+SUBS[topSub[0]].name+'</b>('+topSub[1]+'%)이 돋보입니다. '+
+    '앞으로 조금 더 키우면 좋을 영역은 <b>'+low+'</b>, 특히 '+
+    '<b>'+SUBS[lowSub[0]].name+'</b>('+lowSub[1]+'%)입니다. '+
+    '회복탄력성은 타고나는 것이 아니라 <b>연습으로 키울 수 있는 근육</b>이에요. '+
+    '낮게 나온 영역은 부족이 아니라, 지금부터 길러갈 여지입니다.';
+
+  document.getElementById('srcNote').innerHTML=
+    '<b>ⓘ 출처 및 검증 안내</b><br>'+
+    '본 검사는 <b>김주환 교수의 회복탄력성(KRQ) 3요인 모델</b>(자기조절력·대인관계력·긍정성, 저서 《회복탄력성》)의 '+
+    '구조와, 국제적으로 타당도·신뢰도가 검증된 회복탄력성 척도 '+
+    '<b>CD-RISC</b>(Connor &amp; Davidson, 2003)와 <b>BRS</b>(Smith 외, 2008)의 구성개념을 참고하여, '+
+    'MindMoving이 <b>자체 문항으로 제작한 약식 검사</b>입니다. '+
+    '원 척도의 문항을 그대로 사용하지 않았으며(저작권 보호), 따라서 이 검사 자체의 점수가 임상적으로 표준화·검증된 것은 아닙니다. '+
+    '교육·자기이해·대화의 도구로 활용하시고, 임상적 진단이나 평가의 근거로는 사용하지 마세요.';
+
+  // 따뜻한 안내 + (낮을 때) 전문가 상담 신호
+  let sup='<div class="note" style="border-left-color:#2A9D8F">'+
+    '<b>마음을 위한 한마디</b><br>'+
+    '이 결과는 \'오늘의 나\'를 비추는 거울일 뿐, 당신을 규정하지 않습니다. '+
+    '회복탄력성은 타고나는 재능이 아니라 누구나 연습으로 키울 수 있는 힘이에요.';
+  if(total<40){
+    sup+='<br><br>혹시 요즘 마음이 많이 지치고 버겁다면, 혼자 견디지 않으셔도 괜찮아요. '+
+      '믿을 만한 사람에게 이야기하거나 전문가의 도움을 받는 것도 좋은 선택입니다. '+
+      '<b>정신건강 상담전화 1577-0199</b>(24시간)에서 가까운 상담을 안내받을 수 있어요.';
+  }
+  sup+='</div>';
+  document.getElementById('support').innerHTML=sup;
+}
+
+function restart(){
+  idx=0; answers.fill(null);
+  document.getElementById('result').classList.add('hide');
+  document.getElementById('intro').classList.remove('hide');
+  window.scrollTo(0,0);
+}
+</script>
+<script>
+/* © 2026 마인드무빙 컨설팅 (MindMoving) · www.mindmoving.co.kr — 저작권 표시 */
+(function(){
+  var c=document.createElement('div');
+  c.setAttribute('style','max-width:640px;margin:16px auto 4px;text-align:center;font-size:11px;line-height:1.65;color:#9aa9a8;');
+  c.innerHTML='ⓒ 2026 마인드무빙 컨설팅(MindMoving) · www.mindmoving.co.kr<br>'+
+    '본 검사의 문항·구성·디자인은 마인드무빙 컨설팅의 저작물입니다. 무단 복제·배포·상업적 사용을 금합니다.';
+  function place(){ var w=document.querySelector('.wrap')||document.body; if(w&&!document.getElementById('mmCR')){c.id='mmCR'; w.appendChild(c);} }
+  if(document.readyState!=='loading') place(); else document.addEventListener('DOMContentLoaded',place);
+})();
+</script>
+</body>
+</html>

@@ -3,335 +3,328 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>강점검사 (VIA 24강점) | MindMoving</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<meta name="author" content="마인드무빙 컨설팅 (MindMoving) — www.mindmoving.co.kr">
+<meta name="copyright" content="© 2026 마인드무빙 컨설팅 (MindMoving). All rights reserved. www.mindmoving.co.kr">
+<!--
+  ============================================================
+  ⓒ 2026 마인드무빙 컨설팅 (MindMoving Consulting) · https://www.mindmoving.co.kr
+  본 검사 콘텐츠(문항·구성·채점 방식·디자인)의 저작권은 마인드무빙 컨설팅에 있습니다.
+  무단 복제·배포·수정·상업적 사용을 금합니다. All rights reserved.
+  ============================================================
+-->
+<title>강점검사 · MindMoving</title>
 <style>
   :root{
-    --bg:#EAF0EF; --card:#FFFFFF; --ink:#1E3A3F; --ink-soft:#4A646A; --line:#D8E2E1;
-    --deep:#2C5A62; --teal:#2A9D8F; --amber:#E8A23D;
-    /* 6 미덕 색 */
-    --vW:#2C5A62; --vC:#E07A5F; --vH:#E8A23D; --vJ:#4F8A8B; --vT:#6C8EA0; --vX:#B07BA0;
-    --shadow:0 10px 30px rgba(30,58,63,.08); --radius:18px;
+    --deep:#2C5A62; --teal:#2A9D8F; --amber:#E8A23D; --ink:#1E3A3F;
+    --soft:#55686B; --bg:#EAF0EF; --card:#fff; --line:#D8E2E1; --tint:#F2F6F5;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{font-family:'Noto Sans KR','Malgun Gothic','맑은 고딕',-apple-system,'Apple SD Gothic Neo',sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
-    display:flex;flex-direction:column;align-items:center;min-height:100%}
-  .wrap{width:100%;max-width:640px;padding:22px 18px 60px;flex:1;display:flex;flex-direction:column}
-  .screen{display:none;animation:fade .45s ease both}.screen.active{display:flex;flex-direction:column}
-  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-  .brandtop{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:28px;color:var(--ink-soft);font-size:13px;font-weight:500;letter-spacing:.04em}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
-  .hero{text-align:center;margin-top:10px}
-  .kicker{font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--teal);text-transform:uppercase;margin-bottom:14px}
-  .title{font-size:clamp(32px,8vw,48px);font-weight:900;letter-spacing:.02em;color:var(--deep);line-height:1.08}
-  .subtitle{font-size:16px;color:var(--ink-soft);margin-top:14px;font-weight:500}
-  .lead{font-size:15px;color:var(--ink-soft);margin:20px auto 0;max-width:480px}
-  .notice{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:12px;padding:14px 16px;margin:24px 0 4px;box-shadow:var(--shadow)}
-  .notice .ic{flex:none;font-size:18px;line-height:1.4}.notice p{font-size:13px;color:var(--ink-soft);line-height:1.6}.notice b{color:var(--ink)}
-
-  .virtues{display:flex;flex-direction:column;gap:9px;margin:24px 0 8px}
-  .v-row{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 16px;box-shadow:var(--shadow)}
-  .vchip{flex:none;width:12px;height:34px;border-radius:6px}
-  .v-row .nm{font-weight:700;font-size:14.5px}.v-row .ds{font-size:12px;color:var(--ink-soft)}
-
-  .btn{appearance:none;border:none;cursor:pointer;font-family:inherit;background:var(--teal);color:#fff;font-weight:700;font-size:17px;
-    padding:17px 24px;border-radius:14px;width:100%;box-shadow:0 8px 20px rgba(42,157,143,.28);transition:transform .12s,box-shadow .12s,background .2s}
-  .btn:hover{background:#268e81}.btn:active{transform:translateY(1px)}
-  .btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
-  .btn.ghost{background:transparent;color:var(--ink-soft);box-shadow:none;font-weight:600;font-size:15px;padding:12px;width:auto}
-  .btn.ghost:hover{color:var(--ink)}.btn.ghost[disabled]{opacity:.35;cursor:default}
-  .note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:16px;line-height:1.55}
-
-  .qhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .qcount{font-size:14px;font-weight:700;color:var(--deep)}.qcount span{color:var(--ink-soft);font-weight:500}
-  .qvirtue{font-size:12px;font-weight:700;color:#fff;padding:4px 11px;border-radius:99px}
-  .progress{height:8px;background:#dbe6e4;border-radius:99px;overflow:hidden;margin-bottom:30px}
-  .progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--deep));border-radius:99px;transition:width .35s}
-  .qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:34px 24px;min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center}
-  .qtext{font-size:22px;font-weight:700;color:var(--ink);line-height:1.45}
-  .scale{display:flex;flex-direction:column;gap:10px;margin-top:24px}
-  .opt{appearance:none;cursor:pointer;font-family:inherit;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:13px;
-    padding:15px 18px;font-size:16px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:14px;transition:border-color .15s,background .15s}
-  .opt .mk{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);transition:all .15s}
-  .opt:hover{border-color:var(--teal);background:#f5fbfa}.opt:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
-  .opt.sel{border-color:var(--teal);background:#eaf7f5}
-  .opt.sel .mk{border-color:var(--teal);background:var(--teal);box-shadow:inset 0 0 0 4px #fff}
-  .navrow{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:12px}
-
-  /* 결과 */
-  .rtitle{text-align:center;margin-bottom:6px}.rtitle .kicker{margin-bottom:8px}.rtitle h2{font-size:24px;font-weight:900;color:var(--deep)}
-  .top5{display:flex;flex-direction:column;gap:12px;margin:22px 0}
-  .t5card{display:flex;align-items:center;gap:15px;background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:16px 18px;border-left:6px solid var(--line)}
-  .t5card .rank{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:18px;color:#fff}
-  .t5card .body{flex:1;min-width:0}
-  .t5card .nm{font-weight:800;font-size:17px;color:var(--ink)}
-  .t5card .meta{font-size:12px;color:var(--ink-soft);margin-top:1px}
-  .t5card .desc{font-size:13px;color:var(--ink-soft);margin-top:5px;line-height:1.5}
-  .t5card .pct{flex:none;font-weight:900;font-size:16px;color:var(--deep)}
-
-  .summary{background:linear-gradient(135deg,var(--deep),#234a51);color:#fff;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:22px}
-  .summary p{font-size:14.5px;line-height:1.65;color:#e8f1f0}
-
-  .sectlabel{font-size:14px;font-weight:800;color:var(--deep);margin:6px 2px 12px}
-  .fulllist{display:flex;flex-direction:column;gap:8px}
-  .frow{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:9px 13px}
-  .frow .r{flex:none;width:24px;font-size:12.5px;font-weight:800;color:var(--ink-soft);text-align:right}
-  .frow .vc{flex:none;width:9px;height:9px;border-radius:3px}
-  .frow .nm{flex:none;width:108px;font-size:13.5px;font-weight:700;color:var(--ink)}
-  .frow .bar{flex:1;height:9px;background:#e6edec;border-radius:99px;overflow:hidden}
-  .frow .bar>i{display:block;height:100%;width:0;border-radius:99px;transition:width .8s cubic-bezier(.22,1,.36,1)}
-  .frow .sc{flex:none;width:30px;font-size:12px;font-weight:700;color:var(--ink-soft);text-align:right}
-
-  .disclaimer{font-size:12.5px;color:var(--ink-soft);text-align:center;margin:26px auto 16px;max-width:500px;line-height:1.65}.disclaimer b{color:var(--ink)}
-  .footer{text-align:center;font-size:12px;color:var(--ink-soft);margin-top:26px;letter-spacing:.04em}
-  .source{font-size:11.5px;color:#7C8E8C;text-align:center;margin:20px auto 0;max-width:520px;line-height:1.65;border-top:1px solid var(--line);padding-top:18px}
-  .source b{color:var(--ink-soft)}
-  @media (max-width:420px){.qtext{font-size:20px}.frow .nm{width:88px;font-size:12.5px}}
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.frow .bar>i{transition:none!important}}
+  body{font-family:"Malgun Gothic","맑은 고딕",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:linear-gradient(160deg,#eef3f2 0%,#e3ecea 100%);color:var(--ink);line-height:1.6;
+    -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+  .wrap{width:100%;max-width:640px}
+  .card{background:var(--card);border-radius:20px;padding:34px 30px;
+    box-shadow:0 18px 50px rgba(30,58,63,.13);border:1px solid rgba(216,226,225,.7)}
+  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;color:var(--teal);margin-bottom:10px}
+  h1{font-size:34px;font-weight:800;color:var(--deep);letter-spacing:-.5px}
+  .sub{font-size:15px;color:var(--soft);margin-top:8px}
+  .accent{height:5px;width:54px;background:var(--amber);border-radius:3px;margin:18px 0 22px}
+  .guide{background:var(--tint);border-radius:14px;padding:18px 20px;margin:6px 0 22px;font-size:14px;color:var(--soft)}
+  .guide b{color:var(--ink)}
+  .guide ul{list-style:none;margin-top:8px}
+  .guide li{padding:4px 0 4px 22px;position:relative}
+  .guide li::before{content:"·";position:absolute;left:8px;color:var(--teal);font-weight:800}
+  .src{font-size:12px;color:#8A9B99;margin-top:14px;line-height:1.5}
+  button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
+  .btn-start{width:100%;background:var(--deep);color:#fff;font-size:18px;font-weight:700;padding:16px;border-radius:14px;margin-top:4px}
+  .btn-start:hover{background:#234b52}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .count{font-size:13px;color:var(--soft);font-weight:600}
+  .mode{font-size:11px;font-weight:700;letter-spacing:1px;color:#9aa9a8}
+  .bar{height:8px;background:#e4ecea;border-radius:6px;overflow:hidden;margin:10px 0 26px}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--deep));border-radius:6px;transition:width .35s}
+  .qsmall{font-size:15px;font-weight:600;color:var(--soft);margin:4px 0 14px;text-align:center}
+  .fc{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+  .fcopt{display:flex;align-items:center;gap:16px;background:var(--tint);border:2px solid transparent;border-radius:16px;padding:24px 22px;font-size:18px;font-weight:600;color:var(--ink);text-align:left;width:100%;line-height:1.4}
+  .fcopt:hover{border-color:var(--teal);background:#fff;transform:translateY(-1px)}
+  .fcopt .k{width:34px;height:34px;border-radius:9px;background:#fff;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--soft);flex-shrink:0}
+  .fcopt:hover .k{border-color:var(--teal);color:var(--teal)}
+  .vs{text-align:center;font-size:12px;font-weight:800;color:#b9c6c4;letter-spacing:2px;margin:-2px 0}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;align-items:center}
+  .btn-prev{background:none;color:var(--soft);font-size:14px;padding:8px 4px;font-weight:600}
+  .btn-prev:hover{color:var(--ink)}
+  .hint{font-size:12px;color:#9aa9a8}
+  .res-head{text-align:center;margin-bottom:6px}
+  .sec-title{font-size:13px;font-weight:700;letter-spacing:1px;color:var(--soft);margin:24px 0 12px;text-transform:uppercase}
+  .radar-wrap{display:flex;justify-content:center;margin:6px 0 2px}
+  .top5{display:flex;flex-direction:column;gap:10px}
+  .t5{display:flex;align-items:center;gap:14px;background:var(--tint);border-radius:14px;padding:14px 16px}
+  .t5.first{background:#FBF1DE}
+  .t5 .rk{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .t5 .nm{font-size:17px;font-weight:700}
+  .t5 .vr{font-size:12px;font-weight:700;padding:1px 8px;border-radius:10px;color:#fff;margin-left:8px}
+  .t5 .ds{font-size:12.5px;color:var(--soft);margin-top:2px}
+  .rank-row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px}
+  .rank-row .rn{width:22px;color:#9aa9a8;text-align:right;flex-shrink:0}
+  .rank-row .rname{width:78px;flex-shrink:0;color:var(--ink)}
+  .rbar{flex:1;height:8px;background:#eef2f1;border-radius:5px;overflow:hidden}
+  .rbar>i{display:block;height:100%;border-radius:5px}
+  .insight{background:var(--tint);border-radius:14px;padding:18px 20px;margin-top:6px;font-size:14.5px}
+  .insight b{color:var(--deep)}
+  .note{background:#fff;border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:10px;padding:15px 18px;margin-top:18px;font-size:12.5px;color:var(--soft);line-height:1.6}
+  .note b{color:var(--ink)}
+  .btn-restart{width:100%;background:var(--teal);color:#fff;font-size:16px;font-weight:700;padding:15px;border-radius:13px;margin-top:20px}
+  .btn-restart:hover{background:#23897d}
+  .foot{text-align:center;font-size:11px;color:#9aa9a8;margin-top:18px}
+  .toggle{font-size:13px;color:var(--teal);font-weight:600;cursor:pointer;text-align:center;margin-top:10px}
+  .hide{display:none}
+  @media(max-width:520px){.card{padding:26px 20px}h1{font-size:28px}.fcopt{font-size:16px;padding:20px 18px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- 인트로 -->
-  <section class="screen active" id="intro">
-    <div class="brandtop"><span class="dot"></span> MindMoving 마인드무빙 컨설팅</div>
-    <div class="hero">
-      <div class="kicker">VIA · 24 강점검사</div>
-      <h1 class="title">나의<br>대표 강점</h1>
-      <p class="subtitle">내 안의 가장 빛나는 다섯 가지</p>
-      <p class="lead">누구에게나 24가지 성격강점이 다 있지만, 그 정도는 사람마다 다릅니다. 이 검사는 그중 <b>나에게서 가장 두드러지는 대표강점</b>을 찾아줍니다.</p>
+  <div class="card" id="intro">
+    <span class="badge">MINDMOVING · 자기이해 도구</span>
+    <h1>강점검사</h1>
+    <div class="sub">나의 24가지 성격강점 중, 가장 나다운 '대표강점'을 찾습니다.</div>
+    <div class="accent"></div>
+    <div class="guide">
+      <b>안내</b>
+      <ul>
+        <li>매번 두 가지 강점이 나옵니다. <b>둘 중 '평소의 나'에 더 가까운 쪽</b>을 골라 주세요.</li>
+        <li>총 48문항이에요. 시간에 쫓기지 말고, 부담 없이 하나씩 골라 주세요.</li>
+        <li>둘 다 좋아 보여도, 더 솔직히 '나에 가까운' 쪽을 고르는 게 핵심이에요.</li>
+        <li>'좋은 답'은 없습니다. 그래서 한쪽으로 쏠리지 않고 진짜 강점이 드러나요.</li>
+        <li>결과는 저장되지 않으며, 화면을 닫으면 사라집니다.</li>
+      </ul>
     </div>
-
-    <div class="notice">
-      <span class="ic">🌱</span>
-      <p><b>긍정심리학 기반 강점검사입니다.</b> Peterson & Seligman의 <b>VIA 24강점 분류</b>를 바탕으로 만들었습니다. 약점이 아니라 <b>이미 가진 강점</b>에 주목하는 도구이며, 강의·워크숍의 자기이해용 참고 자료입니다.</p>
+    <button class="btn-start" onclick="start()">검사 시작하기</button>
+    <div class="src">
+      이 검사는 <b>VIA 성격강점 분류</b>(Peterson &amp; Seligman)를 바탕으로, 24강점을 서로 맞비교하는
+      <b>강제선택(둘 중 고르기)</b> 방식으로 MindMoving이 자체 제작한 약식 검사입니다.
+      정품 VIA-IS가 아니며 임상 진단 도구가 아닙니다.
     </div>
+  </div>
 
-    <div class="virtues">
-      <div class="v-row"><span class="vchip" style="background:var(--vW)"></span><div><div class="nm">지혜와 지식</div><div class="ds">창의성·호기심·판단력·학구열·통찰</div></div></div>
-      <div class="v-row"><span class="vchip" style="background:var(--vC)"></span><div><div class="nm">용기</div><div class="ds">용감함·끈기·정직·활력</div></div></div>
-      <div class="v-row"><span class="vchip" style="background:var(--vH)"></span><div><div class="nm">인간애</div><div class="ds">사랑·친절·사회지능</div></div></div>
-      <div class="v-row"><span class="vchip" style="background:var(--vJ)"></span><div><div class="nm">정의</div><div class="ds">협동심·공정성·리더십</div></div></div>
-      <div class="v-row"><span class="vchip" style="background:var(--vT)"></span><div><div class="nm">절제</div><div class="ds">용서·겸손·신중함·자기조절</div></div></div>
-      <div class="v-row"><span class="vchip" style="background:var(--vX)"></span><div><div class="nm">초월</div><div class="ds">심미안·감사·희망·유머·영성</div></div></div>
+  <div class="card hide" id="quiz">
+    <div class="top">
+      <span class="count"><span id="cur">1</span> / <span id="tot">48</span></span>
+      <span class="mode">더 나다운 쪽 고르기</span>
     </div>
-
-    <div style="margin-top:24px"><button class="btn" id="startBtn">검사 시작하기 (72문항)</button></div>
-    <p class="note">약 7~9분 소요 · 결과는 기록되거나 저장되지 않습니다.<br>이 화면을 닫으면 모든 응답이 사라져요.</p>
-  </section>
-
-  <!-- 검사 -->
-  <section class="screen" id="test">
-    <div class="qhead">
-      <div class="qcount"><span id="qNow">1</span> <span>/ 72</span></div>
-      <div class="qvirtue" id="qVirtueTag">지혜</div>
+    <div class="bar"><i id="prog" style="width:0%"></i></div>
+    <div class="qsmall">두 가지 모습 중, 더 '나답다'고 느껴지는 쪽은?</div>
+    <div id="qbody"></div>
+    <div class="nav">
+      <button class="btn-prev" id="prevBtn" onclick="prev()">← 이전</button>
+      <span class="hint">키보드 1 / 2</span>
     </div>
-    <div class="progress"><i id="bar"></i></div>
-    <div class="qcard"><p class="qtext" id="qText" aria-live="polite">문항</p></div>
-    <div class="scale" id="scale" role="group" aria-label="응답 선택"></div>
-    <div class="navrow">
-      <button class="btn ghost" id="prevBtn">← 이전 문항</button>
-      <button class="btn ghost" id="restartTest">처음으로</button>
-    </div>
-  </section>
+  </div>
 
-  <!-- 결과 -->
-  <section class="screen" id="result">
-    <div class="rtitle"><div class="kicker">Signature Strengths</div><h2>내 대표강점 Top 5</h2></div>
+  <div class="card hide" id="result">
+    <div class="res-head"><span class="badge">YOUR SIGNATURE STRENGTHS</span>
+      <h1 style="font-size:26px">나의 강점 지도</h1></div>
+    <div class="sec-title">6가지 미덕 균형</div>
+    <div class="radar-wrap" id="radar"></div>
+    <div class="sec-title">대표강점 Top 5</div>
     <div class="top5" id="top5"></div>
-
-    <div class="summary"><p id="sumText"></p></div>
-
-    <div class="sectlabel">전체 24강점 순위</div>
-    <div class="fulllist" id="fulllist"></div>
-
-    <p class="disclaimer"><b>이 결과는 진단이 아니라 자기 이해와 성장을 위한 참고예요.</b> 24강점은 모두 좋은 자질이며, 점수가 낮다고 부족한 것이 아니라 상대적으로 덜 두드러질 뿐입니다. 대표강점은 의식적으로 더 자주 활용할수록 빛을 발합니다.</p>
-
-    <button class="btn" id="againBtn">다시 검사하기</button>
-    <p class="source">ⓘ <b>출처 안내</b> · 이 검사는 <b>정품 VIA-IS®나 갤럽 CliftonStrengths®(태나지먼트 포함) 검사가 아닙니다.</b> 공개된 <b>VIA 24강점 분류</b>(Peterson & Seligman, 2004)를 바탕으로 자체 제작한 <b>약식 검사</b>이며, 정품 문항은 사용하지 않았습니다. 각 명칭·문항의 상표 및 저작권은 해당 권리자에게 있습니다.</p>
-    <p class="footer">MindMoving · 기반: VIA Character Strengths (Peterson & Seligman)</p>
-  </section>
+    <div class="sec-title">읽어보기</div>
+    <div class="insight" id="insight"></div>
+    <div class="toggle" id="toggleAll" onclick="toggleAll()">▾ 24강점 전체 순위 보기</div>
+    <div id="allRank" class="hide" style="margin-top:14px"></div>
+    <div class="note" id="srcNote"></div>
+    <button class="btn-restart" onclick="restart()">다시하기</button>
+    <div class="foot">MindMoving · AI Technology × Human Psychology</div>
+  </div>
 
 </div>
 
 <script>
-(function(){
-  "use strict";
-  function getCss(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+const S = {
+  cre:{nm:"창의성", vr:"지혜", c:"#2C5A62", ds:"새롭고 쓸모 있는 방식으로 생각하고 행동함", fc:"새로운 방법을 찾아낼 때"},
+  cur:{nm:"호기심", vr:"지혜", c:"#2C5A62", ds:"새로운 경험과 주제에 흥미와 탐구심이 큼", fc:"새로운 것을 알아갈 때"},
+  jud:{nm:"판단력", vr:"지혜", c:"#2C5A62", ds:"다각도로 살펴 증거로 판단함", fc:"꼼꼼히 따져 판단할 때"},
+  lov:{nm:"학구열", vr:"지혜", c:"#2C5A62", ds:"배움 자체에서 기쁨을 느낌", fc:"무언가를 배우고 익힐 때"},
+  per:{nm:"통찰", vr:"지혜", c:"#2C5A62", ds:"큰 그림을 보고 지혜로운 조언을 줌", fc:"누군가에게 지혜로운 조언을 줄 때"},
+  bra:{nm:"용감함", vr:"용기", c:"#C0392B", ds:"어려움에도 옳은 일에 나섬", fc:"옳은 일에 용기를 낼 때"},
+  grit:{nm:"끈기", vr:"용기", c:"#C0392B", ds:"시작한 일을 끝까지 해냄", fc:"포기하지 않고 끝까지 해낼 때"},
+  hon:{nm:"정직", vr:"용기", c:"#C0392B", ds:"진실되고 진정성 있게 행동함", fc:"솔직하고 진실하게 행동할 때"},
+  zes:{nm:"활력", vr:"용기", c:"#C0392B", ds:"열정과 에너지로 삶에 임함", fc:"활기차고 열정적으로 임할 때"},
+  luv:{nm:"사랑", vr:"인간애", c:"#B5781F", ds:"친밀한 관계를 소중히 하고 나눔", fc:"가까운 사람과 정을 나눌 때"},
+  kin:{nm:"친절", vr:"인간애", c:"#B5781F", ds:"대가 없이 돕고 베풂", fc:"대가 없이 남을 도울 때"},
+  soc:{nm:"사회지능", vr:"인간애", c:"#B5781F", ds:"감정과 동기를 잘 알아챔", fc:"상대의 마음을 알아챌 때"},
+  tea:{nm:"협동심", vr:"정의", c:"#3C7A7B", ds:"집단의 일원으로 충실히 협력함", fc:"팀을 위해 협력할 때"},
+  fai:{nm:"공정성", vr:"정의", c:"#3C7A7B", ds:"편견 없이 모두를 공평하게 대함", fc:"모두를 공평하게 대할 때"},
+  lea:{nm:"리더십", vr:"정의", c:"#3C7A7B", ds:"사람을 이끌어 목표를 이룸", fc:"사람들을 이끌어 갈 때"},
+  forg:{nm:"용서", vr:"절제", c:"#5E7E8C", ds:"잘못한 이를 용서하고 자비를 베풂", fc:"잘못한 사람을 용서할 때"},
+  mod:{nm:"겸손", vr:"절제", c:"#5E7E8C", ds:"과시하지 않고 성취가 스스로 드러나게 함", fc:"드러내지 않고 겸손할 때"},
+  pru:{nm:"신중함", vr:"절제", c:"#5E7E8C", ds:"위험을 살펴 신중히 선택함", fc:"위험을 미리 살펴 신중할 때"},
+  reg:{nm:"자기조절", vr:"절제", c:"#5E7E8C", ds:"감정과 욕구를 잘 다스림", fc:"감정과 욕구를 잘 다스릴 때"},
+  bea:{nm:"심미안", vr:"초월", c:"#8A5A88", ds:"아름다움과 탁월함에 감동함", fc:"아름다움에 감동할 때"},
+  gra:{nm:"감사", vr:"초월", c:"#8A5A88", ds:"좋은 일을 알아차리고 고마워함", fc:"작은 일에도 감사할 때"},
+  hop:{nm:"희망", vr:"초월", c:"#8A5A88", ds:"더 나아질 것을 믿고 준비함", fc:"희망을 잃지 않을 때"},
+  humo:{nm:"유머", vr:"초월", c:"#8A5A88", ds:"웃음과 밝은 면으로 즐거움을 줌", fc:"유머로 분위기를 풀어줄 때"},
+  spi:{nm:"영성", vr:"초월", c:"#8A5A88", ds:"삶의 의미·목적과 더 큰 것에 연결됨", fc:"삶의 의미를 추구할 때"}
+};
+const KEYS = Object.keys(S);
+const VIRT = ["지혜","용기","인간애","정의","절제","초월"];
+const VCOLOR = {"지혜":"#2C5A62","용기":"#C0392B","인간애":"#B5781F","정의":"#3C7A7B","절제":"#5E7E8C","초월":"#8A5A88"};
 
-  const VIRTUE={
-    W:{nm:'지혜',full:'지혜와 지식',color:getCss('--vW')},
-    C:{nm:'용기',full:'용기',color:getCss('--vC')},
-    H:{nm:'인간애',full:'인간애',color:getCss('--vH')},
-    J:{nm:'정의',full:'정의',color:getCss('--vJ')},
-    T:{nm:'절제',full:'절제',color:getCss('--vT')},
-    X:{nm:'초월',full:'초월',color:getCss('--vX')}
-  };
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
-  /* 24강점 × 3문항 (모두 정채점) */
-  const S=[
-    {v:'W',nm:'창의성',en:'Creativity',ds:'새롭고 기발한 아이디어로 문제를 푸는 힘',
-      q:["나는 새롭고 기발한 아이디어를 잘 떠올린다.","나는 나만의 독창적인 방법을 찾는 편이다.","나는 문제를 남다른 시각으로 풀어낸다."]},
-    {v:'W',nm:'호기심',en:'Curiosity',ds:'새로운 것을 탐구하고 알아가려는 마음',
-      q:["나는 새로운 것을 알아가는 것이 즐겁다.","나는 다양한 주제에 관심과 흥미가 많다.","나는 낯선 경험이나 장소에 기꺼이 도전한다."]},
-    {v:'W',nm:'판단력',en:'Judgment',ds:'여러 측면을 살펴 균형 있게 판단하는 힘',
-      q:["나는 결론 내리기 전에 여러 측면을 두루 살핀다.","나는 감정보다 사실을 근거로 판단한다.","나는 섣불리 단정하지 않고 신중히 따져본다."]},
-    {v:'W',nm:'학구열',en:'Love of Learning',ds:'배움 그 자체에서 기쁨을 느끼는 마음',
-      q:["나는 새로운 지식이나 기술을 배우는 것을 좋아한다.","나는 관심 분야를 깊이 파고드는 편이다.","나는 배움 그 자체에서 보람을 느낀다."]},
-    {v:'W',nm:'통찰',en:'Perspective',ds:'큰 그림을 보고 지혜로운 관점을 주는 힘',
-      q:["나는 큰 그림을 보고 핵심을 잘 짚는다.","사람들이 내게 조언이나 의견을 구하는 편이다.","나는 복잡한 상황에서도 지혜로운 관점을 제시한다."]},
-
-    {v:'C',nm:'용감함',en:'Bravery',ds:'두려움 앞에서도 옳은 일을 행하는 힘',
-      q:["나는 옳다고 생각하면 어려움이 있어도 행동한다.","나는 두렵더라도 해야 할 일은 피하지 않는다.","나는 반대에 부딪혀도 내 소신을 밝힌다."]},
-    {v:'C',nm:'끈기',en:'Perseverance',ds:'시작한 일을 끝까지 해내는 꾸준함',
-      q:["나는 시작한 일은 끝까지 마무리한다.","나는 어려움이 있어도 쉽게 포기하지 않는다.","나는 목표를 향해 꾸준히 노력한다."]},
-    {v:'C',nm:'정직',en:'Honesty',ds:'진실하고 겉과 속이 같은 태도',
-      q:["나는 진실하게 말하고 행동한다.","나는 한 약속과 책임을 지키려 한다.","나는 겉과 속이 같은 사람이라는 말을 듣는다."]},
-    {v:'C',nm:'활력',en:'Zest',ds:'에너지와 열정으로 삶에 임하는 생기',
-      q:["나는 에너지가 넘치고 활기차다.","나는 무슨 일이든 열정적으로 임한다.","나는 하루하루를 생기 있게 보낸다."]},
-
-    {v:'H',nm:'사랑',en:'Love',ds:'가까운 사람과 따뜻한 관계를 맺는 힘',
-      q:["나는 가까운 사람들과의 따뜻한 관계를 소중히 한다.","나는 사랑하는 사람에게 마음을 잘 표현한다.","나는 애정과 관심을 편안히 주고받는다."]},
-    {v:'H',nm:'친절',en:'Kindness',ds:'대가 없이 남을 돕고 배려하는 마음',
-      q:["나는 도움이 필요한 사람을 기꺼이 돕는다.","나는 대가를 바라지 않고 남에게 베푼다.","나는 다른 사람을 배려하고 챙긴다."]},
-    {v:'H',nm:'사회지능',en:'Social Intelligence',ds:'타인의 감정과 분위기를 헤아리는 힘',
-      q:["나는 다른 사람의 감정과 분위기를 잘 알아챈다.","나는 상황에 맞게 적절히 행동할 줄 안다.","나는 사람들의 마음을 잘 헤아린다."]},
-
-    {v:'J',nm:'협동심',en:'Teamwork',ds:'팀의 일원으로 충실히 협력하는 힘',
-      q:["나는 팀의 일원으로서 맡은 몫을 충실히 한다.","나는 공동의 목표를 위해 기꺼이 협력한다.","나는 소속된 집단에 책임감을 느낀다."]},
-    {v:'J',nm:'공정성',en:'Fairness',ds:'편견 없이 모두를 공평하게 대하는 힘',
-      q:["나는 모든 사람을 공평하게 대한다.","나는 편견 없이 똑같은 기준으로 판단한다.","나는 호불호와 상관없이 정당하게 대우한다."]},
-    {v:'J',nm:'리더십',en:'Leadership',ds:'사람을 이끌고 함께 목표를 이루는 힘',
-      q:["나는 사람들을 이끌고 일을 조직하는 데 능하다.","나는 구성원들이 잘 어울리도록 분위기를 만든다.","나는 함께 목표를 이루도록 사람들을 독려한다."]},
-
-    {v:'T',nm:'용서',en:'Forgiveness',ds:'앙심 대신 다시 기회를 주는 너그러움',
-      q:["나는 잘못한 사람에게 다시 기회를 준다.","나는 앙심을 품기보다 너그럽게 넘긴다.","나는 받은 상처를 오래 담아두지 않는다."]},
-    {v:'T',nm:'겸손',en:'Humility',ds:'자신을 내세우지 않는 차분함',
-      q:["나는 내 공을 내세우지 않는 편이다.","나는 스스로를 과시하지 않는다.","나는 주목받기보다 묵묵히 행동으로 보인다."]},
-    {v:'T',nm:'신중함',en:'Prudence',ds:'결과를 미리 따져 조심스럽게 행하는 힘',
-      q:["나는 결정하기 전에 결과를 미리 따져본다.","나는 위험한 선택은 조심스럽게 피한다.","나는 나중에 후회할 말이나 행동을 삼간다."]},
-    {v:'T',nm:'자기조절',en:'Self-Regulation',ds:'감정과 충동을 다스리는 절제력',
-      q:["나는 감정과 충동을 잘 다스린다.","나는 해야 할 일을 위해 욕구를 절제한다.","나는 규칙적인 생활 습관을 유지한다."]},
-
-    {v:'X',nm:'심미안',en:'Beauty',ds:'아름다움과 탁월함에 감동하는 감수성',
-      q:["나는 아름다운 것을 보면 깊이 감동한다.","나는 자연·예술·뛰어난 솜씨에 감탄한다.","나는 일상 속 아름다움을 잘 알아챈다."]},
-    {v:'X',nm:'감사',en:'Gratitude',ds:'받은 것에 고마움을 느끼고 표현하는 힘',
-      q:["나는 받은 것에 고마움을 자주 느낀다.","나는 감사한 마음을 잘 표현한다.","나는 작은 일에도 감사할 줄 안다."]},
-    {v:'X',nm:'희망',en:'Hope',ds:'더 나아질 것을 믿고 준비하는 낙관',
-      q:["나는 앞날이 잘 풀릴 것이라 기대한다.","나는 어려워도 더 나아질 것이라 믿는다.","나는 긍정적인 마음으로 미래를 준비한다."]},
-    {v:'X',nm:'유머',en:'Humor',ds:'웃음과 즐거움으로 분위기를 밝히는 힘',
-      q:["나는 사람들을 잘 웃기고 즐겁게 한다.","나는 힘든 상황에서도 웃음을 잃지 않는다.","나는 유쾌하고 장난기 있는 면이 있다."]},
-    {v:'X',nm:'영성',en:'Spirituality',ds:'삶의 의미와 더 큰 가치를 추구하는 마음',
-      q:["나는 삶의 의미와 목적을 중요하게 여긴다.","나는 나보다 큰 무언가와 연결돼 있다고 느낀다.","나는 내 신념이나 가치가 삶의 중심이 된다."]}
-  ];
-
-  const SCALE=[
-    {v:5,t:"매우 그렇다"},{v:4,t:"그렇다"},{v:3,t:"보통이다"},{v:2,t:"아니다"},{v:1,t:"전혀 아니다"}
-  ];
-
-  /* 문항 구성: 라운드(0,1,2) × 24강점 → 연속 강점이 모두 다르게 */
-  const items=[];
-  for(let r=0;r<3;r++){ S.forEach((s,si)=>{ items.push({si:si,v:s.v,t:s.q[r]}); }); }
-  const N=items.length; // 72
-  const answers=new Array(N).fill(null);
-  let cur=0;
-
-  const $=id=>document.getElementById(id);
-  const screens={intro:$("intro"),test:$("test"),result:$("result")};
-  function show(name){for(const k in screens)screens[k].classList.toggle("active",k===name);window.scrollTo({top:0,behavior:"instant"});}
-
-  function renderQ(){
-    const it=items[cur];
-    $("qNow").textContent=cur+1;
-    $("qText").textContent=it.t;
-    const tag=$("qVirtueTag"); tag.textContent=VIRTUE[it.v].nm; tag.style.background=VIRTUE[it.v].color;
-    $("bar").style.width=(cur/N*100)+"%";
-    $("prevBtn").disabled=(cur===0);
-    const box=$("scale"); box.innerHTML="";
-    SCALE.forEach(opt=>{
-      const b=document.createElement("button");
-      b.className="opt"+(answers[cur]===opt.v?" sel":"");
-      b.innerHTML='<span class="mk"></span><span>'+opt.t+'</span>';
-      b.setAttribute("aria-pressed",answers[cur]===opt.v);
-      b.onclick=()=>choose(opt.v);
-      box.appendChild(b);
-    });
+/* 라운드로빈(circle method): 각 강점이 정확히 4번 등장하는 48개 비교쌍 생성 */
+function buildPairs(){
+  const order = shuffle(KEYS.slice());            // 어떤 강점끼리 만날지 무작위화
+  const n = order.length;                          // 24
+  const fixed = order[0];
+  let rot = order.slice(1);                         // 23개 회전
+  const pairs = [];
+  for(let r=0; r<4; r++){
+    const line = [fixed, ...rot];                   // 길이 24
+    for(let i=0; i<n/2; i++){
+      let a=line[i], b=line[n-1-i];
+      if(Math.random()<.5){ const t=a; a=b; b=t; }  // 좌우 무작위
+      pairs.push({a,b});
+    }
+    rot.unshift(rot.pop());                          // 회전
   }
-  function choose(v){
-    answers[cur]=v;
-    [...$("scale").children].forEach((c,i)=>{const on=SCALE[i].v===v;c.classList.toggle("sel",on);c.setAttribute("aria-pressed",on);});
-    setTimeout(()=>{ if(cur<N-1){cur++;renderQ();} else finish(); },180);
-  }
-  $("startBtn").onclick=()=>{cur=0;show("test");renderQ();};
-  $("prevBtn").onclick=()=>{if(cur>0){cur--;renderQ();}};
-  $("restartTest").onclick=resetAll; $("againBtn").onclick=resetAll;
-  function resetAll(){answers.fill(null);cur=0;$("bar").style.width="0%";show("intro");}
+  return shuffle(pairs);                             // 문항 순서도 섞기
+}
 
-  function finish(){
-    $("bar").style.width="100%";
-    /* 강점별 점수(3~15) */
-    const score=S.map(()=>0);
-    items.forEach((it,i)=>{ score[it.si]+=(answers[i]||3); });
-    const pct=raw=>Math.round((raw-3)/12*100);
+let PAIRS=[], answers=[], cur=0;
+function start(){
+  PAIRS=buildPairs(); answers=new Array(PAIRS.length).fill(null); cur=0;
+  document.getElementById('intro').classList.add('hide');
+  document.getElementById('quiz').classList.remove('hide');
+  document.getElementById('tot').textContent=PAIRS.length;
+  render();
+}
+function render(){
+  const it=PAIRS[cur];
+  document.getElementById('cur').textContent=cur+1;
+  document.getElementById('prog').style.width=(cur/PAIRS.length*100)+'%';
+  let h='<div class="fc">';
+  h+='<button class="fcopt" style="'+(answers[cur]===it.a?'border-color:var(--teal);background:#fff':'')+'" onclick="pickFc(\''+it.a+'\')"><span class="k">1</span>'+S[it.a].fc+'</button>';
+  h+='<div class="vs">VS</div>';
+  h+='<button class="fcopt" style="'+(answers[cur]===it.b?'border-color:var(--teal);background:#fff':'')+'" onclick="pickFc(\''+it.b+'\')"><span class="k">2</span>'+S[it.b].fc+'</button>';
+  h+='</div>';
+  document.getElementById('qbody').innerHTML=h;
+  document.getElementById('prevBtn').style.visibility = cur===0?'hidden':'visible';
+}
+function pickFc(k){ answers[cur]=k; if(cur<PAIRS.length-1){cur++;render();} else finish(); }
+function prev(){ if(cur>0){cur--;render();} }
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('quiz').classList.contains('hide'))return;
+  const it=PAIRS[cur];
+  if(e.key==='1') pickFc(it.a);
+  if(e.key==='2') pickFc(it.b);
+  if(e.key==='Backspace'){e.preventDefault();prev();}
+});
 
-    /* 순위 (동점 시 원래 순서 유지) */
-    const ranked=S.map((s,i)=>({i,s,raw:score[i]})).sort((a,b)=> b.raw-a.raw || a.i-b.i );
-
-    /* Top5 */
-    const t5=$("top5"); t5.innerHTML="";
-    ranked.slice(0,5).forEach((r,idx)=>{
-      const col=VIRTUE[r.s.v].color;
-      const c=document.createElement("div");
-      c.className="t5card"; c.style.borderLeftColor=col;
-      c.innerHTML=
-        '<div class="rank" style="background:'+col+'">'+(idx+1)+'</div>'+
-        '<div class="body"><div class="nm">'+r.s.nm+'</div>'+
-        '<div class="meta">'+r.s.en+' · '+VIRTUE[r.s.v].full+'</div>'+
-        '<div class="desc">'+r.s.ds+'</div></div>'+
-        '<div class="pct">'+pct(r.raw)+'%</div>';
-      t5.appendChild(c);
-    });
-
-    /* 요약: 대표강점이 가장 많이 속한 미덕 */
-    const vcount={};
-    ranked.slice(0,5).forEach(r=>{vcount[r.s.v]=(vcount[r.s.v]||0)+1;});
-    let topV=ranked[0].s.v, best=0;
-    for(const k in vcount){ if(vcount[k]>best){best=vcount[k];topV=k;} }
-    const names=ranked.slice(0,5).map(r=>r.s.nm).join(', ');
-    $("sumText").textContent=
-      "당신의 대표강점은 ‘"+names+"’입니다. 특히 ‘"+VIRTUE[topV].full+"’의 강점들이 두드러져요. "+
-      "이 강점들을 의식적으로 더 자주 꺼내 쓸 때, 일과 관계에서 가장 자연스럽게 힘을 발휘하게 됩니다.";
-
-    /* 전체 24강점 순위 */
-    const list=$("fulllist"); list.innerHTML="";
-    ranked.forEach((r,idx)=>{
-      const col=VIRTUE[r.s.v].color, p=pct(r.raw);
-      const row=document.createElement("div");
-      row.className="frow";
-      row.innerHTML=
-        '<span class="r">'+(idx+1)+'</span>'+
-        '<span class="vc" style="background:'+col+'"></span>'+
-        '<span class="nm">'+r.s.nm+'</span>'+
-        '<span class="bar"><i style="background:'+col+'"></i></span>'+
-        '<span class="sc">'+r.raw+'</span>';
-      list.appendChild(row);
-      requestAnimationFrame(()=>{ setTimeout(()=>{ row.querySelector('.bar>i').style.width=p+"%"; }, 50+idx*15); });
-    });
-
-    show("result");
-  }
-
-  document.addEventListener("keydown",e=>{
-    if(!screens.test.classList.contains("active"))return;
-    const map={"1":5,"2":4,"3":3,"4":2,"5":1};
-    if(e.key in map) choose(map[e.key]);
+function finish(){
+  const wins={}, beat={};
+  KEYS.forEach(k=>{wins[k]=0; beat[k]=[];});
+  PAIRS.forEach((p,i)=>{
+    const w=answers[i]; if(!w) return;
+    const l = (w===p.a)?p.b:p.a;
+    wins[w]++; beat[w].push(l);
   });
+  // 보조점수: 강한 강점을 이긴 쪽이 동점에서 앞서도록
+  const opp={}; KEYS.forEach(k=>{ opp[k]=beat[k].reduce((s,o)=>s+wins[o],0); });
+  const ranked=KEYS.slice().sort((a,b)=> wins[b]-wins[a] || opp[b]-opp[a] || S[a].nm.localeCompare(S[b].nm));
+  const pct={}; KEYS.forEach(k=>{ pct[k]=Math.round(wins[k]/4*100); });
+  // 미덕별 평균
+  const vval={}; VIRT.forEach(v=>{
+    const mem=KEYS.filter(k=>S[k].vr===v);
+    vval[v]=Math.round(mem.reduce((s,k)=>s+pct[k],0)/mem.length);
+  });
+  showResult(ranked, pct, vval);
+}
+
+function radarSVG(vval){
+  const cx=160, cy=150, R=108, W=320, Hh=300, rings=4;
+  const ang=i=>(-90 + i*60)*Math.PI/180;
+  let g='';
+  // 그리드 링
+  for(let r=1;r<=rings;r++){
+    const rr=R*r/rings;
+    const pts=VIRT.map((v,i)=>(cx+rr*Math.cos(ang(i)))+','+(cy+rr*Math.sin(ang(i)))).join(' ');
+    g+='<polygon points="'+pts+'" fill="none" stroke="#E1E9E8" stroke-width="1"/>';
+  }
+  // 축선 + 라벨
+  VIRT.forEach((v,i)=>{
+    const x=cx+R*Math.cos(ang(i)), y=cy+R*Math.sin(ang(i));
+    g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="#E1E9E8" stroke-width="1"/>';
+    const lx=cx+(R+24)*Math.cos(ang(i)), ly=cy+(R+24)*Math.sin(ang(i));
+    const anchor = Math.abs(Math.cos(ang(i)))<0.3 ? 'middle' : (Math.cos(ang(i))>0?'start':'end');
+    g+='<text x="'+lx+'" y="'+(ly+4)+'" font-size="13" font-weight="700" fill="'+VCOLOR[v]+'" text-anchor="'+anchor+'">'+v+'</text>';
+    g+='<text x="'+lx+'" y="'+(ly+19)+'" font-size="11" fill="#8A9B99" text-anchor="'+anchor+'">'+(vval[v]||0)+'%</text>';
+  });
+  // 데이터 폴리곤
+  const dpts=VIRT.map((v,i)=>{const rr=R*(vval[v]||0)/100;return (cx+rr*Math.cos(ang(i)))+','+(cy+rr*Math.sin(ang(i)));}).join(' ');
+  g+='<polygon points="'+dpts+'" fill="rgba(42,157,143,0.20)" stroke="#2A9D8F" stroke-width="2.5" stroke-linejoin="round"/>';
+  VIRT.forEach((v,i)=>{const rr=R*(vval[v]||0)/100;const x=cx+rr*Math.cos(ang(i)),y=cy+rr*Math.sin(ang(i));
+    g+='<circle cx="'+x+'" cy="'+y+'" r="3.5" fill="#2A9D8F"/>';});
+  return '<svg viewBox="0 0 '+W+' '+Hh+'" width="100%" style="max-width:340px">'+g+'</svg>';
+}
+
+function showResult(ranked, pct, vval){
+  document.getElementById('quiz').classList.add('hide');
+  document.getElementById('result').classList.remove('hide');
+  document.getElementById('radar').innerHTML=radarSVG(vval);
+  // Top5
+  const t5=document.getElementById('top5'); t5.innerHTML='';
+  ranked.slice(0,5).forEach((k,i)=>{const s=S[k];
+    const el=document.createElement('div'); el.className='t5'+(i===0?' first':'');
+    el.innerHTML='<div class="rk">'+(i+1)+'</div><div><div class="nm">'+s.nm+
+      '<span class="vr" style="background:'+s.c+'">'+s.vr+'</span></div>'+
+      '<div class="ds">'+s.ds+'</div></div>';
+    t5.appendChild(el);
+  });
+  // insight: 최고 미덕 + 대표강점
+  const topV=VIRT.slice().sort((a,b)=>vval[b]-vval[a])[0];
+  document.getElementById('insight').innerHTML=
+    '당신의 강점은 <b>'+topV+'</b> 영역에서 가장 두드러지며, 대표강점은 <b>'+S[ranked[0]].nm+'</b>입니다. '+
+    '대표강점은 쓸 때 힘이 덜 들고 오히려 에너지가 차오르는, 가장 \'나다운\' 강점이에요. '+
+    '레이더가 한쪽으로 치우쳐도 괜찮습니다 — 그게 당신만의 강점 모양이에요. '+
+    '이번 주, 대표강점 하나를 <b>새로운 방식으로</b> 한 번 써 보세요.';
+  // 24 ranking
+  const wrap=document.getElementById('allRank'); wrap.innerHTML='';
+  ranked.forEach((k,i)=>{const s=S[k];const p=pct[k];
+    const r=document.createElement('div'); r.className='rank-row';
+    r.innerHTML='<span class="rn">'+(i+1)+'</span><span class="rname">'+s.nm+'</span>'+
+      '<div class="rbar"><i style="width:'+Math.max(p,4)+'%;background:'+s.c+(i<5?'':'88')+'"></i></div>';
+    wrap.appendChild(r);
+  });
+  document.getElementById('srcNote').innerHTML=
+    '<b>ⓘ 방식 및 출처 안내</b><br>'+
+    '이 검사는 <b>VIA 성격강점 분류</b>(Peterson &amp; Seligman, 2004)의 24강점·6미덕 체계를 바탕으로 합니다. '+
+    '\'좋은 답\'으로 쏠리는 것을 막기 위해, 24강점을 서로 맞비교하는 <b>강제선택</b> 방식(각 강점이 4번씩 대결)을 사용하고 문항 순서를 무작위로 섞었습니다. '+
+    '원 척도(VIA-IS)의 문항을 그대로 쓰지 않은 MindMoving 자체 제작 <b>약식 검사</b>이며, '+
+    '통계적 표준화·규준 검증을 거치지 않았으므로 결과는 임상·평가용이 아닌 자기이해·대화용 참고 자료입니다.';
+}
+function toggleAll(){
+  const el=document.getElementById('allRank'), t=document.getElementById('toggleAll');
+  if(el.classList.contains('hide')){el.classList.remove('hide');t.textContent='▴ 접기';}
+  else{el.classList.add('hide');t.textContent='▾ 24강점 전체 순위 보기';}
+}
+function restart(){
+  document.getElementById('result').classList.add('hide');
+  document.getElementById('allRank').classList.add('hide');
+  document.getElementById('toggleAll').textContent='▾ 24강점 전체 순위 보기';
+  document.getElementById('intro').classList.remove('hide');
+  window.scrollTo(0,0);
+}
+</script>
+<script>
+/* © 2026 마인드무빙 컨설팅 (MindMoving) · www.mindmoving.co.kr — 저작권 표시 */
+(function(){
+  var c=document.createElement('div');
+  c.setAttribute('style','max-width:640px;margin:16px auto 4px;text-align:center;font-size:11px;line-height:1.65;color:#9aa9a8;');
+  c.innerHTML='ⓒ 2026 마인드무빙 컨설팅(MindMoving) · www.mindmoving.co.kr<br>'+
+    '본 검사의 문항·구성·디자인은 마인드무빙 컨설팅의 저작물입니다. 무단 복제·배포·상업적 사용을 금합니다.';
+  function place(){ var w=document.querySelector('.wrap')||document.body; if(w&&!document.getElementById('mmCR')){c.id='mmCR'; w.appendChild(c);} }
+  if(document.readyState!=='loading') place(); else document.addEventListener('DOMContentLoaded',place);
 })();
 </script>
 </body>

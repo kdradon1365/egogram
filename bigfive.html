@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="마인드무빙 컨설팅 (MindMoving) — www.mindmoving.co.kr">
+<meta name="copyright" content="© 2026 마인드무빙 컨설팅 (MindMoving). All rights reserved. www.mindmoving.co.kr">
+<!--
+  ============================================================
+  ⓒ 2026 마인드무빙 컨설팅 (MindMoving Consulting)
+  https://www.mindmoving.co.kr
+  본 검사 콘텐츠(문항·구성·채점 방식·디자인)의 저작권은
+  마인드무빙 컨설팅에 있습니다. 무단 복제·배포·수정·상업적 사용을 금합니다.
+  All rights reserved. Unauthorized use is prohibited.
+  ============================================================
+-->
 <title>빅파이브(Big Five) 성격검사 | MindMoving</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,14 +148,14 @@
     </div>
 
     <div style="margin-top:24px"><button class="btn" id="startBtn">검사 시작하기 (50문항)</button></div>
-    <p class="note">약 5~7분 소요 · 결과는 기록되거나 저장되지 않습니다.<br>이 화면을 닫으면 모든 응답이 사라져요.</p>
+    <p class="note">부담 없이 자연스럽게 답해 주세요 · 결과는 기록되거나 저장되지 않습니다.<br>이 화면을 닫으면 모든 응답이 사라져요.</p>
   </section>
 
   <!-- 검사 -->
   <section class="screen" id="test">
     <div class="qhead">
       <div class="qcount"><span id="qNow">1</span> <span>/ 50</span></div>
-      <div class="qfactor" id="qFactorTag">O</div>
+      <div class="qfactor" id="qFactorTag" style="display:none">O</div>
     </div>
     <div class="progress"><i id="bar"></i></div>
     <div class="qcard"><p class="qtext" id="qText" aria-live="polite">문항</p></div>
@@ -168,7 +179,7 @@
 
     <div class="rcards" id="rcards"></div>
 
-    <p class="disclaimer">빅파이브는 학술적으로 가장 널리 검증된 성격 모델이지만, 이 결과는 스스로 응답한 자기보고에 기반한 <b>자기 이해용 참고 자료</b>입니다. 의학적·심리학적 진단이 아니며, 높고 낮음에 좋고 나쁨은 없습니다. 모든 프로필은 정상 범위의 차이입니다.</p>
+    <p class="disclaimer">빅파이브는 학술적으로 가장 널리 검증된 성격 모델이지만, 이 결과는 스스로 응답한 자기보고에 기반한 <b>자기 이해용 참고 자료</b>입니다. 의학적·심리학적 진단이 아니며, 높고 낮음에 좋고 나쁨은 없습니다. 모든 프로필은 정상 범위의 차이입니다. 또한 이 웹 검사 자체는 별도의 표준화·규준 검증을 거치지 않았으므로, 결과는 참고용으로 봐 주세요.</p>
 
     <button class="btn" id="againBtn">다시 검사하기</button>
     <p class="source">ⓘ <b>출처 안내</b> · 이 검사는 학계에 공개된 <b>공공 도메인 문항 IPIP-50</b>(Goldberg, International Personality Item Pool)을 한국어로 옮겨 제작한 것입니다. NEO-PI-R 등 <b>상용 정품 검사가 아니며</b>, 연구·교육용으로 자유롭게 쓸 수 있는 비독점 자료를 바탕으로 한 약식 검사입니다.</p>
@@ -370,6 +381,17 @@
     const n=parseInt(e.key,10);
     if(n>=1&&n<=5) choose(n);
   });
+})();
+</script>
+<script>
+/* © 2026 마인드무빙 컨설팅 (MindMoving) · www.mindmoving.co.kr — 저작권 표시 */
+(function(){
+  var c=document.createElement('div');
+  c.setAttribute('style','max-width:640px;margin:16px auto 4px;text-align:center;font-size:11px;line-height:1.65;color:#9aa9a8;');
+  c.innerHTML='ⓒ 2026 마인드무빙 컨설팅(MindMoving) · www.mindmoving.co.kr<br>'+
+    '본 검사의 문항·구성·디자인은 마인드무빙 컨설팅의 저작물입니다. 무단 복제·배포·상업적 사용을 금합니다.';
+  function place(){ var w=document.querySelector('.wrap')||document.body; if(w&&!document.getElementById('mmCR')){c.id='mmCR'; w.appendChild(c);} }
+  if(document.readyState!=='loading') place(); else document.addEventListener('DOMContentLoaded',place);
 })();
 </script>
 </body>

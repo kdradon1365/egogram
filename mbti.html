@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="마인드무빙 컨설팅 (MindMoving) — www.mindmoving.co.kr">
+<meta name="copyright" content="© 2026 마인드무빙 컨설팅 (MindMoving). All rights reserved. www.mindmoving.co.kr">
+<!--
+  ============================================================
+  ⓒ 2026 마인드무빙 컨설팅 (MindMoving Consulting)
+  https://www.mindmoving.co.kr
+  본 검사 콘텐츠(문항·구성·채점 방식·디자인)의 저작권은
+  마인드무빙 컨설팅에 있습니다. 무단 복제·배포·수정·상업적 사용을 금합니다.
+  All rights reserved. Unauthorized use is prohibited.
+  ============================================================
+-->
 <title>성격유형 검사 (MBTI 스타일) | MindMoving</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,7 +123,7 @@
 
     <div class="notice">
       <span class="ic">💡</span>
-      <p><b>가볍게 즐겨 주세요.</b> 이 검사는 <b>재미와 자기탐색·대화를 여는 용도</b>입니다. 널리 알려진 4지표 구조를 본떠 만든 것으로, 학술적으로 검증된 진단 도구는 아니에요. 더 안정적이고 검증된 결과가 필요하면 <b>빅파이브 검사</b>를 권합니다.</p>
+      <p><b>가볍게 즐겨 주세요.</b> 이 검사는 <b>재미와 자기탐색·대화를 여는 용도</b>입니다. 널리 알려진 4지표 구조를 본떠 만든 것으로, 학술적으로 검증된 진단 도구는 아니에요.</p>
     </div>
 
     <div class="axes">
@@ -123,14 +134,14 @@
     </div>
 
     <div style="margin-top:24px"><button class="btn" id="startBtn">검사 시작하기 (48문항)</button></div>
-    <p class="note">약 5~7분 소요 · 결과는 기록되거나 저장되지 않습니다.<br>이 화면을 닫으면 모든 응답이 사라져요.</p>
+    <p class="note">부담 없이 자연스럽게 답해 주세요 · 결과는 기록되거나 저장되지 않습니다.<br>이 화면을 닫으면 모든 응답이 사라져요.</p>
   </section>
 
   <!-- 검사 -->
   <section class="screen" id="test">
     <div class="qhead">
       <div class="qcount"><span id="qNow">1</span> <span>/ 48</span></div>
-      <div class="qaxis" id="qAxisTag">E·I</div>
+      <div class="qaxis" id="qAxisTag" style="display:none">E·I</div>
     </div>
     <div class="progress"><i id="bar"></i></div>
     <div class="qcard"><p class="qtext" id="qText" aria-live="polite">문항</p></div>
@@ -156,7 +167,7 @@
 
     <div class="strength" id="strength"></div>
 
-    <p class="disclaimer"><b>이 결과는 진단이 아니라 자기탐색을 위한 참고예요.</b> 사람은 16개 칸으로 나뉘지 않으며, 같은 사람도 상황·시기에 따라 다르게 나올 수 있습니다. 경계(50%에 가까운 지표)는 특히 유동적이에요. 좋고 나쁜 유형은 없습니다.</p>
+    <p class="disclaimer"><b>이 결과는 진단이 아니라 자기탐색을 위한 참고예요.</b> 사람은 16개 칸으로 나뉘지 않으며, 같은 사람도 상황·시기에 따라 다르게 나올 수 있습니다. 경계(50%에 가까운 지표)는 특히 유동적이에요. 좋고 나쁜 유형은 없습니다. 이 검사는 통계적 표준화·검증을 거치지 않은 흥미·자기탐색용 약식 도구입니다.</p>
 
     <button class="btn" id="againBtn">다시 검사하기</button>
     <p class="source">ⓘ <b>출처 안내</b> · 이 검사는 <b>정품 MBTI® 검사가 아닙니다.</b> MBTI는 The Myers-Briggs Company의 등록 상표이며, 본 검사는 저작권이 있는 정품 문항을 사용하지 않고 널리 알려진 4지표(E·I / S·N / T·F / J·P) 구조를 참고해 <b>자체 제작한 약식 검사</b>입니다.</p>
@@ -380,6 +391,17 @@
     const map={"1":+2,"2":+1,"3":0,"4":-1,"5":-2};
     if(e.key in map) choose(map[e.key]);
   });
+})();
+</script>
+<script>
+/* © 2026 마인드무빙 컨설팅 (MindMoving) · www.mindmoving.co.kr — 저작권 표시 */
+(function(){
+  var c=document.createElement('div');
+  c.setAttribute('style','max-width:640px;margin:16px auto 4px;text-align:center;font-size:11px;line-height:1.65;color:#9aa9a8;');
+  c.innerHTML='ⓒ 2026 마인드무빙 컨설팅(MindMoving) · www.mindmoving.co.kr<br>'+
+    '본 검사의 문항·구성·디자인은 마인드무빙 컨설팅의 저작물입니다. 무단 복제·배포·상업적 사용을 금합니다.';
+  function place(){ var w=document.querySelector('.wrap')||document.body; if(w&&!document.getElementById('mmCR')){c.id='mmCR'; w.appendChild(c);} }
+  if(document.readyState!=='loading') place(); else document.addEventListener('DOMContentLoaded',place);
 })();
 </script>
 </body>
