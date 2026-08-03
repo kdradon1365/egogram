@@ -22,12 +22,11 @@
     --c-self:#2C5A62; --c-rel:#2A9D8F; --c-pos:#E8A23D;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
   body{
     font-family:"Malgun Gothic","맑은 고딕",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     background:linear-gradient(160deg,#eef3f2 0%,#e3ecea 100%);
     color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;
-    display:flex; align-items:center; justify-content:center; padding:20px;
+    display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px;
   }
   .wrap{width:100%; max-width:640px}
   .card{
@@ -309,6 +308,7 @@ function band(p){
 function showResult(total,domPct,subPct){
   document.getElementById('quiz').classList.add('hide');
   document.getElementById('result').classList.remove('hide');
+  window.scrollTo(0,0);
   document.getElementById('totPct').textContent=total;
   const b=band(total); const be=document.getElementById('band');
   be.textContent=b.t; be.style.color=b.c; be.style.background=b.bg;
